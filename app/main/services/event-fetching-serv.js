@@ -5,7 +5,9 @@
 
 'use strict';
 angular.module('main')
-.service('EventFetching', function ($log) {
+.service('EventFetching', function ($log, Config, $http) {
+
+  var serverURL = Config.ENV.SERVER_URL;
 
   $log.log('Hello from your Service: Event Fetching in module main');
 
@@ -22,6 +24,32 @@ angular.module('main')
    */
   this.fetchEvents= function () {
     //make the request here (using $http or another kind of service)
+
+    // var req = {
+    //   method: 'POST',
+    //   url: serverURL + '/API ENDPOINT',
+    //   headers: {
+    //     'Content-Type': 'application/json'
+    //   },
+    //   data: params
+    // };
+    //
+    //
+    //
+    // /**
+    //  * Send the request to the server and return the promise.
+    //  * If a reponse is recieved, do some stuff
+    //  * @param  {object} req request object
+    //  * @return {promise}     request promise
+    //  */
+    // return this.$http(req)
+    //   .then((response) => {
+    //     // when response got
+    //   })
+    //   .catch((error) => {
+    //     //If error
+    //   });
+
 
     /**
      * For now we just mock the events by hard-coding them in the service method
