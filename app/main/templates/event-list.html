@@ -1,0 +1,11 @@
+<ion-view view-title="Race events">
+  <ion-content>
+    <!-- list iterating on the array of events,
+    for each event add a list-item directive element with the current iterated
+    event in parameters-->
+    <ion-list>
+      <event-item event="event" ng-repeat="event in events"></event-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>
