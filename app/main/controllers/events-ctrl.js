@@ -12,5 +12,5 @@ angular.module('main')
 
   $log.log('Hello from your Controller: EventsCtrl in module main:. This is your controller:', this);
 
-  $scope.events = EventFetching.getEvents();
+  $scope.events = EventFetching.mockEvents();
 });
