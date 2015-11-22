@@ -18,9 +18,6 @@ angular.module('main')
   var service = {
     apiHost: apiHost,
     getEvents: getEvents,
-    addEvent: addEvent,
-    editEvent: editEvent,
-    deleteEvent: deleteEvent,
     mockEvents: mockEvents
   };
 
@@ -45,12 +42,6 @@ angular.module('main')
     }
   }
 
-  function addEvent(event) {}
-
-  function deleteEvent(event) {}
-
-  function editEvent(event) {}
-
   function mockEvents() {
     return [{
       name: 'event1',
@@ -60,10 +51,6 @@ angular.module('main')
       name: 'event2',
       racetrack: 'Malmö',
       text: 'bla bla'
-    }, {
-      name: 'event3',
-      racetrack: 'Stockholm',
-      text: 'bla bla bla'
     }, {
       name: 'event3',
       racetrack: 'Stockholm',
