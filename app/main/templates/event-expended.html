@@ -1,52 +1,58 @@
-<ion-view view-title="{{event.name}} in {{event.racetrack}}">
+<ion-view view-title="Event detail">
 
-  <ion-content class="padding">
+  <ion-content>
 
-    <p>
-      {{event.description}}
-    </p>
-    <hr>
-    <p>
-      <h3>
-        Offer Tittle
-      </h3>
-      <img src="{{event.offer.image}}" alt="Offer Image" /> {{event.offer.description}}
-    </p>
-    <hr>
-    <p>
-      <h3>
-        Start List
-      </h3>
-      {{event.startList}}
-    </p>
-    <hr>
-    <p>
-      <h3>
-        Today's Highlights
-      </h3>
-      {{event.todayHighlights}}
-    </p>
-    <hr>
-    <p>
-      <h3>
-        Today's Home Team
-      </h3>
-      {{event.todayHomeTeam}}
-    </p>
-    <hr>
-    <p>
-      <h3>
-        Racing Calendar
-      </h3>
-      {{event.racingCalendar}}
-    </p>
-    <hr>
-    <p>
-      <h3>
-        About The Track
-      </h3>
-      {{event.aboutTheTrack}}
-    </p>
+    <div class="list card">
+
+      <div class="item">
+        <h2>{{event.name}}
+          in
+          {{event.racetrack}}</h2>
+        <p>{{event.date}}</p>
+      </div>
+
+      <div class="item item-body">
+        <img class="full-image" src="{{event.poster}}">
+        <p>
+          {{event.description}}
+        </p>
+      </div>
+
+      <div class="item item-text-wrap">
+        <h2>Today's offer</h2>
+        <div class="row">
+          <div class="col col-50"><img src="{{event.offer.image}}" style="width: 100%; height: auto;"></div>
+          <div class="col-50">{{event.offer.description}}</div>
+        </div>
+      </div>
+
+
+      <div class="item item-text-wrap">
+        <h2>Start list</h2>
+        {{event.startList}}
+      </div>
+
+      <div class="item item-text-wrap">
+        <h2>Today's highlight</h2>
+        {{event.todayHighlights}}
+      </div>
+
+      <div class="item item-text-wrap">
+        <h2>Today's Home Team</h2>
+        {{event.todayHomeTeam}}
+      </div>
+
+      <div class="item item-text-wrap">
+        <h2>Racing Calendar</h2>
+        {{event.racingCalendar}}
+      </div>
+
+      <div class="item item-text-wrap">
+        <h2>About The Track</h2>
+        {{event.aboutTheTrack}}
+      </div>
+
+    </div>
   </ion-content>
 
 </ion-view>

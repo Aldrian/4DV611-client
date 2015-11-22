@@ -45,8 +45,10 @@ angular.module('main')
     function mockEvents() {
       return [{
         name: 'event1',
-        racetrack: 'Växjö',
+        racetrack: 'Karlstad',
+        date: 'November 05, 1955',
         description: 'Sample event description',
+        poster: 'main/assets/images/farjestad.jpg',
         offer: {
           image: 'main/assets/images/cat.jpg',
           description: 'Event  Offer description'
@@ -59,6 +61,8 @@ angular.module('main')
       }, {
         name: 'event2',
         racetrack: 'Stockholm',
+        date: 'November 05, 1955',
+        poster: 'main/assets/images/stockholm.jpg',
         description: 'Sample event description',
         offer: {
           image: 'main/assets/images/cat.jpg',
@@ -72,6 +76,8 @@ angular.module('main')
       }, {
         name: 'event3',
         racetrack: 'Malmö',
+        date: 'November 05, 1955',
+        poster: 'main/assets/images/jagersro.jpg',
         description: 'Sample event description',
         offer: {
           image: 'main/assets/images/cat.jpg',

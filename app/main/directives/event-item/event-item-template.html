@@ -1,9 +1,10 @@
-<ion-item
-  class="item-remove-animate item-avatar item-icon-right"
-  type="item-text-wrap"
-  ui-sref="main.eventDetail({event:event})">
-  <img src="main/assets/images/cat.jpg">
-  <h2>{{event.name}} in {{event.racetrack}}</h2>
-  <p>{{event.description}}</p>
-  <i class="icon ion-chevron-right icon-accessory"></i>
-</ion-item>
+<div class="card" ui-sref="main.eventDetail({event:event})">
+  <div class="item item-divider">
+    {{event.name}}
+    in
+    {{event.racetrack}}
+  </div>
+  <div class="item item-text-wrap">
+    {{event.description}}
+  </div>
+</div>

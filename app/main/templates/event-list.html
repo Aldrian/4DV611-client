@@ -1,11 +1,82 @@
 <ion-view view-title="Race events">
   <ion-content>
-    <!-- list iterating on the array of events,
+    <div class="eventlist">
+
+      <img alt="" class="poster" src="main/assets/images/horseracing.jpg"/>
+
+      <!-- list iterating on the array of events,
     for each event add a list-item directive element with the current iterated
     event in parameters-->
-    <ion-list>
-      <event-item event="event" ng-repeat="event in events"></event-item>
-    </ion-list>
+      <ion-list>
+        <event-item event="event" ng-repeat="event in events"></event-item>
+      </ion-list>
+    </div>
 
   </ion-content>
+  <div class="bar bar-footer bar-balanced" ng-click="openModal()">
+    <div class="title">Open modal</div>
+  </div>
 </ion-view>
+
+
+
+<script id="my-modal.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">Select your tracks</h1>
+    </ion-header-bar>
+    <ion-content>
+
+      <div class="card">
+        <div class="item item-text-wrap">
+          <p>
+            Hey there !
+          </p>
+          <p>
+            Please select which racetrack you're interested in
+          </p>
+        </div>
+      </div>
+
+      <ul class="list">
+
+        <li class="item item-checkbox">
+          <label class="checkbox">
+            <input type="checkbox">
+          </label>
+          Malmö
+        </li>
+        <li class="item item-checkbox">
+          <label class="checkbox">
+            <input type="checkbox">
+          </label>
+          Stockholm
+        </li>
+        <li class="item item-checkbox">
+          <label class="checkbox">
+            <input type="checkbox">
+          </label>
+          Karlstad
+        </li>
+        <li class="item item-checkbox">
+          <label class="checkbox">
+            <input type="checkbox">
+          </label>
+          Växjö
+        </li>
+        <li class="item item-checkbox">
+          <label class="checkbox">
+            <input type="checkbox">
+          </label>
+          Whatever
+        </li>
+
+      </ul>
+
+    </ion-content>
+    <div class="bar bar-footer bar-balanced" ng-click="closeModal()">
+      <div class="title">Done !</div>
+    </div>
+
+  </ion-modal-view>
+</script>
