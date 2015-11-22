@@ -5,56 +5,83 @@
 
 'use strict';
 angular.module('main')
-.service('EventFetching', function ($log, Config, $http) {
+  .service('EventFetching', function($log, Config, $http) {
 
-  $log.log('Hello from your Service: Event Fetching in module main');
+    $log.log('Hello from your Service: Event Fetching in module main');
 
-  var apiHost = Config.ENV.SERVER_URL;
+    var apiHost = Config.ENV.SERVER_URL;
 
-  /**
-   * Returns the interface of the service
-   * @type {Object}
-   */
-  var service = {
-    apiHost: apiHost,
-    getEvents: getEvents,
-    mockEvents: mockEvents
-  };
+    /**
+     * Returns the interface of the service
+     * @type {Object}
+     */
+    var service = {
+      apiHost: apiHost,
+      getEvents: getEvents,
+      mockEvents: mockEvents
+    };
 
-  return service;
+    return service;
 
-  function getEvents(limit) {
-    //Get only the 10 last events
-    if (!limit) {
-      limit = 10;
+    function getEvents(limit) {
+      //Get only the 10 last events
+      if (!limit) {
+        limit = 10;
+      }
+
+      return $http.get(apiHost + '/events?per_page=' + limit)
+        .then(getEventsComplete)
+        .catch(getEventsFailed);
+
+      function getEventsComplete(response) {
+        return response.data;
+      }
+
+      function getEventsFailed(error) {
+        $log.error('XHR Failed for getEvents.\n' + angular.toJson(error.data, true));
+      }
     }
 
-    return $http.get(apiHost + '/events?per_page=' + limit)
-      .then(getEventsComplete)
-      .catch(getEventsFailed);
-
-    function getEventsComplete(response) {
-      return response.data;
+    function mockEvents() {
+      return [{
+        name: 'event1',
+        racetrack: 'Växjö',
+        description: 'Sample event description',
+        offer: {
+          image: 'main/assets/images/cat.jpg',
+          description: 'Event  Offer description'
+        },
+        startList: 'Event  1 strat list',
+        todayHighlights: 'Event 1 Today Highlight',
+        todayHomeTeam: 'Event 1 Today Home Team',
+        racingCalendar: 'Event 1 Racing Calendar',
+        aboutTheTrack: 'Track Description'
+      }, {
+        name: 'event2',
+        racetrack: 'Växjö',
+        description: 'Sample event description',
+        offer: {
+          image: 'main/assets/images/cat.jpg',
+          description: 'Event  Offer description'
+        },
+        startList: 'Event  2 strat list',
+        todayHighlights: 'Event 2 Today Highlight',
+        todayHomeTeam: 'Event 2 Today Home Team',
+        racingCalendar: 'Event 2 Racing Calendar',
+        aboutTheTrack: 'Track Description'
+      }, {
+        name: 'event3',
+        racetrack: 'Växjö',
+        description: 'Sample event description',
+        offer: {
+          image: 'main/assets/images/cat.jpg',
+          description: 'Event  Offer description'
+        },
+        startList: 'Event  3 strat list',
+        todayHighlights: 'Event 3 Today Highlight',
+        todayHomeTeam: 'Event 3 Today Home Team',
+        racingCalendar: 'Event 3 Racing Calendar',
+        aboutTheTrack: 'Track Description'
+      }];
     }
-
-    function getEventsFailed(error) {
-      $log.error('XHR Failed for getEvents.\n' + angular.toJson(error.data, true));
-    }
-  }
-
-  function mockEvents() {
-    return [{
-      name: 'event1',
-      racetrack: 'Växjö',
-      text: 'bla'
-    }, {
-      name: 'event2',
-      racetrack: 'Malmö',
-      text: 'bla bla'
-    }, {
-      name: 'event3',
-      racetrack: 'Stockholm',
-      text: 'bla bla bla'
-    }];
-  }
-});
+  });
