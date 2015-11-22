@@ -58,7 +58,7 @@ angular.module('main')
         aboutTheTrack: 'Track Description'
       }, {
         name: 'event2',
-        racetrack: 'Växjö',
+        racetrack: 'Stockholm',
         description: 'Sample event description',
         offer: {
           image: 'main/assets/images/cat.jpg',
@@ -71,7 +71,7 @@ angular.module('main')
         aboutTheTrack: 'Track Description'
       }, {
         name: 'event3',
-        racetrack: 'Växjö',
+        racetrack: 'Malmö',
         description: 'Sample event description',
         offer: {
           image: 'main/assets/images/cat.jpg',

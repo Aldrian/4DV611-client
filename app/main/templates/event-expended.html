@@ -2,12 +2,51 @@
 
   <ion-content class="padding">
 
-    <img ng-src="main/assets/images/cat.jpg" style="width: 64px; height: 64px">
-
     <p>
-      {{event.text}}
+      {{event.description}}
     </p>
-
+    <hr>
+    <p>
+      <h3>
+        Offer Tittle
+      </h3>
+      <img src="{{event.offer.image}}" alt="Offer Image" /> {{event.offer.description}}
+    </p>
+    <hr>
+    <p>
+      <h3>
+        Start List
+      </h3>
+      {{event.startList}}
+    </p>
+    <hr>
+    <p>
+      <h3>
+        Today's Highlights
+      </h3>
+      {{event.todayHighlights}}
+    </p>
+    <hr>
+    <p>
+      <h3>
+        Today's Home Team
+      </h3>
+      {{event.todayHomeTeam}}
+    </p>
+    <hr>
+    <p>
+      <h3>
+        Racing Calendar
+      </h3>
+      {{event.racingCalendar}}
+    </p>
+    <hr>
+    <p>
+      <h3>
+        About The Track
+      </h3>
+      {{event.aboutTheTrack}}
+    </p>
   </ion-content>
 
 </ion-view>
