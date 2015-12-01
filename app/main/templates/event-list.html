@@ -14,7 +14,7 @@
 
   </ion-content>
   <div class="bar bar-footer bar-balanced" ng-click="openModal()">
-    <div class="title">Open modal</div>
+    <div class="title">Race Tracks</div>
   </div>
 </ion-view>
 
@@ -27,7 +27,7 @@
     </ion-header-bar>
     <ion-content>
 
-    <div class="tracklist">  saved in local Storage: {{output}}
+    <div class="tracklist">
       <ion-checkbox ng-repeat="thema in themen track by $index"
                       type="checkbox"
                       id="{{thema.id}}"

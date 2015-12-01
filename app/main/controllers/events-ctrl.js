@@ -8,7 +8,7 @@
  */
 'use strict';
 angular.module('main')
-  .controller('EventsCtrl', function($log, $scope, $ionicModal, EventFetching) {
+  .controller('EventsCtrl', function($log, $scope, $ionicModal, EventFetching, $window, $ionicPlatform) {
 
     $log.log('Hello from your Controller: EventsCtrl in module main:. This is your controller:', this);
 
