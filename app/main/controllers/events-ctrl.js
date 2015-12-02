@@ -13,13 +13,13 @@ angular.module('main')
     $log.log('Hello from your Controller: EventsCtrl in module main:. This is your controller:', this);
 
     var init = function() {
-      $log.log("initializing device");
+      $log.log('initializing device');
       try {
         // Get the UUID here, but don't work on desktop
         $log.log($cordovaDevice.getUUID());
 
       } catch (err) {
-        $log.log("Error: " + err.message);
+        $log.log('Error: ' + err.message);
       }
 
     };
@@ -47,7 +47,7 @@ angular.module('main')
     });
     $scope.openModal = function() {
       $scope.modal.show();
-      $ionicPlatform.ready(function($index) {
+      $ionicPlatform.ready(function() {
         // Ready functions
       });
       //List of racing tracks
@@ -198,11 +198,11 @@ angular.module('main')
       }];
       $scope.updateThemaLocalStorage = function($index) {
         // Debug: call by index dynamically
-        console.log("klicked index: " + $index);
+        console.log('klicked index: ' + $index);
         console.log($scope.themen[$index].name);
-        console.log("current state: " + $scope.themen[$index].checked);
+        console.log('current state: ' + $scope.themen[$index].checked);
         // Actually doing the localStorage: set item to true/false
-        console.log("recent saved state: " + $window.localStorage[$index]);
+        console.log('recent saved state: ' + $window.localStorage[$index]);
         $window.localStorage.setItem($index, $scope.themen[$index].checked);
       };
       $scope.output = $window.localStorage;
