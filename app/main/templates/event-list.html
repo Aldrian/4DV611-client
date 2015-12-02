@@ -14,71 +14,28 @@
 
   </ion-content>
   <div class="bar bar-footer bar-balanced" ng-click="openModal()">
-    <div class="title">Open modal</div>
+    <div class="title">Race Tracks</div>
   </div>
 </ion-view>
 
 
 
 <script id="my-modal.html" type="text/ng-template">
-  <ion-modal-view>
+    <ion-modal-view>
     <ion-header-bar>
       <h1 class="title">Select your tracks</h1>
     </ion-header-bar>
     <ion-content>
-
-      <div class="card">
-        <div class="item item-text-wrap">
-          <p>
-            Hey there !
-          </p>
-          <p>
-            Please select which racetrack you're interested in
-          </p>
+      <div class="tracklist">
+        <ion-checkbox ng-repeat="thema in themen track by $index"
+                        type="checkbox"
+                        id="{{thema.id}}"
+                        ng-model="thema.checked"
+                        ng-change="updateThemaLocalStorage($index)"
+                        ng-checked="{{getCheck($index)}}">
+                        {{ thema.name }}
+          </ion-checkbox>
         </div>
-      </div>
-
-      <ul class="list">
-
-        <li class="item item-checkbox">
-          <label class="checkbox">
-            <input type="checkbox">
-          </label>
-          Malmö
-        </li>
-        <li class="item item-checkbox">
-          <label class="checkbox">
-            <input type="checkbox">
-          </label>
-          Stockholm
-        </li>
-        <li class="item item-checkbox">
-          <label class="checkbox">
-            <input type="checkbox">
-          </label>
-          Karlstad
-        </li>
-        <li class="item item-checkbox">
-          <label class="checkbox">
-            <input type="checkbox">
-          </label>
-          Växjö
-        </li>
-        <li class="item item-checkbox">
-          <label class="checkbox">
-            <input type="checkbox">
-          </label>
-          Kalmar
-        </li>
-        <li class="item item-checkbox">
-          <label class="checkbox">
-            <input type="checkbox">
-          </label>
-          Lund
-        </li>
-
-      </ul>
-
     </ion-content>
     <div class="bar bar-footer bar-balanced" ng-click="closeModal()">
       <div class="title">Done !</div>
