@@ -12,8 +12,15 @@ angular.module('main')
 
     $log.log('Hello from your Controller: EventsCtrl in module main:. This is your controller:', this);
 
-    $scope.events = EventFetching.mockEvents();
+    var eventPromise = EventFetching.getEvents();
 
+    eventPromise.then(function(data){
+        $scope.events = data;
+    });
+
+    $scope.getOfferImageAddress = function(endpoint){
+      return EventFetching.apiHost + endpoint;
+    };
 
 
     $ionicModal.fromTemplateUrl('my-modal.html', {

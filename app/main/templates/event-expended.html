@@ -7,21 +7,21 @@
       <div class="item">
         <h2>{{event.name}}
           in
-          {{event.racetrack}}</h2>
-        <p>{{event.date}}</p>
+          {{event.track.name}}</h2>
+        <p>{{event.highlight}}</p>
       </div>
 
       <div class="item item-body">
-        <img class="full-image" src="{{event.poster}}">
+        <img class="full-image" src="main/assets/images/stockholm.jpg">
         <p>
-          {{event.description}}
+          {{event.homeTeam}}
         </p>
       </div>
 
       <div class="item item-text-wrap">
         <h2>Today's offer</h2>
         <div class="row">
-          <div class="col col-50"><img src="{{event.offer.image}}" style="width: 100%; height: auto;"></div>
+          <div class="col col-50"><img src="{{getOfferImageAddress(event.offerImage)}}" style="width: 100%; height: auto;"></div>
           <div class="col-50">{{event.offer.description}}</div>
         </div>
       </div>
