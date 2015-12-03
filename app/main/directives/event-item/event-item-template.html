@@ -1,8 +1,8 @@
 <div class="card" ui-sref="main.eventDetail({event:event})">
   <div class="item item-divider">
-    {{event.name}}
+    {{event.date | date:'medium'}}
     in
-    {{event.track.name}}
+    {{event.name}}
   </div>
   <div class="item item-text-wrap">
     {{event.highlight}}
