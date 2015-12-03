@@ -34,7 +34,7 @@
         Races :
       </div>
 
-      <a class="item item-icon-right" href="#" ng-repeat="race in event.raceList">
+      <a class="item item-icon-right" ui-sref="main.raceDetail({race:race})" ng-repeat="race in event.raceList">
         {{race.startTime | date: 'medium'}}
         <br>
         {{race.information}}

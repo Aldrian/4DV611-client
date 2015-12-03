@@ -1,0 +1,53 @@
+<ion-view view-title="Race">
+
+  <ion-content>
+
+    <div class="list card">
+
+      <div class="item">
+        <h2>{{race.startTime | date: 'medium'}}</h2>
+        <p>{{race.highlight}}</p>
+      </div>
+
+
+
+      <div class="item item-text-wrap">
+        Race number {{race.number}} <br>
+        {{race.informations}}
+      </div>
+
+      <div class="item item-text-wrap">
+        <h2>Reserv Order</h2>
+        {{race.reservOrder}}
+      </div>
+
+      <div class="item item-text-wrap">
+        <h2>Short Informations</h2>
+        {{race.shortInformation}}
+      </div>
+
+
+
+
+      <div class="item item-divider">
+        {{race.horseCount}} horses :
+      </div>
+
+      <div class="item item-text-wrap" ng-repeat="horse in race.startList">
+        <h2>{{horse.horse}}</h2>
+        Sex : {{horse.sex}}
+        <br>
+        Driver : {{horse.driver}}
+        <br>
+        Trainer : {{horse.trainer}}
+        <br>
+        #{{horse.startNumber}}, {{horse.age}}yo
+        <br>
+        {{horse.totalWinnings}} wins
+      </div>
+
+
+    </div>
+  </ion-content>
+
+</ion-view>

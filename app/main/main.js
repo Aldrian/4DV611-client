@@ -36,6 +36,18 @@ angular.module('main', [
             }
           }
         })
+        .state('main.raceDetail', {
+          url: '/events/detail/race',
+          params:{
+            race: null,
+          },
+          views: {
+            'pageContent': {
+              templateUrl: 'main/templates/race.html',
+              controller: 'RaceCtrl as ctrl'
+            }
+          }
+        })
         .state('main.config', {
           url: '/config',
           views: {
