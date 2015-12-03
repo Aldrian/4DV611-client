@@ -1,13 +1,11 @@
-<ion-view view-title="Event detail">
+<ion-view view-title="Event">
 
   <ion-content>
 
     <div class="list card">
 
       <div class="item">
-        <h2>{{event.name}}
-          in
-          {{event.track.name}}</h2>
+        <h2>{{event.name}}</h2>
         <p>{{event.highlight}}</p>
       </div>
 
@@ -19,6 +17,12 @@
       </div>
 
       <div class="item item-text-wrap">
+        <h2>{{event.track.name}}
+        </h2>
+        {{event.track.address}}
+      </div>
+
+      <div class="item item-text-wrap">
         <h2>Today's offer</h2>
         <div class="row">
           <div class="col col-50"><img src="{{getOfferImageAddress(event.offerImage)}}" style="width: 100%; height: auto;"></div>
@@ -26,31 +30,21 @@
         </div>
       </div>
 
-
-      <div class="item item-text-wrap">
-        <h2>Start list</h2>
-        {{event.startList}}
+      <div class="item item-divider">
+        Races :
       </div>
 
-      <div class="item item-text-wrap">
-        <h2>Today's highlight</h2>
-        {{event.todayHighlights}}
-      </div>
+      <a class="item item-icon-right" href="#" ng-repeat="race in event.raceList">
+        {{race.startTime | date: 'medium'}}
+        <br>
+        {{race.information}}
+        <br>
+        <span>
+           #{{race.number}}, {{race.horseCount}} horses.
+        </span>
+        <i class="icon ion-android-arrow-dropright"></i>
+      </a>
 
-      <div class="item item-text-wrap">
-        <h2>Today's Home Team</h2>
-        {{event.todayHomeTeam}}
-      </div>
-
-      <div class="item item-text-wrap">
-        <h2>Racing Calendar</h2>
-        {{event.racingCalendar}}
-      </div>
-
-      <div class="item item-text-wrap">
-        <h2>About The Track</h2>
-        {{event.aboutTheTrack}}
-      </div>
 
     </div>
   </ion-content>
