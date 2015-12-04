@@ -101,13 +101,13 @@ function runBlock($log, $window, Config, LocalStorage, AccountManagement, $cordo
     One Signal config
     **************************/
     // Enable to debug issues.
-    // window.plugins.OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
+    //$window.plugins.OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
     var notificationOpenedCallback = function(jsonData) {
       $log.log('didReceiveRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
     };
 
-    $window.plugins.OneSignal.init(Config.ONESIGNAL_APP_ID, {
-        googleProjectNumber: Config.GOOGLE_PROJECT_NUMBER
+    $window.plugins.OneSignal.init(Config.ENV.ONESIGNAL_APP_ID, {
+        googleProjectNumber: Config.ENV.GOOGLE_PROJECT_NUMBER
       },
       notificationOpenedCallback);
 
