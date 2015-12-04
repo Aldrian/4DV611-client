@@ -7,6 +7,8 @@ angular.module('main')
   ENV: {
     /*inject-env*/
     'SERVER_URL': 'http://46.101.168.154:8080/api/v1.0/',
+    'ONESIGNAL_APP_ID': '',
+    'GOOGLE_PROJECT_NUMBER': '240511434663',
     'RACETRACKS': [
       {
         'name': 'Arvika',
