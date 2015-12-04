@@ -9,7 +9,17 @@
 angular.module('main')
 .directive('eventItem', function () {
   return {
-    templateUrl: 'main/directives/event-item/event-item-template.html',
+    template:
+    '<div class="card" ui-sref="main.eventDetail({event:event})">' +
+      '<div class="item item-divider">' +
+        '{{event.date | date:\'medium\'}}' +
+        'in' +
+        '{{event.name}}' +
+    '  </div>' +
+      '<div class="item item-text-wrap">' +
+        '{{event.highlight}}' +
+    '  </div>' +
+    '</div>',
     restrict: 'E',
     link: function postLink () {
     }
