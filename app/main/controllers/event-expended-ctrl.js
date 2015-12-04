@@ -8,7 +8,7 @@
  */
 'use strict';
 angular.module('main')
-.controller('RaceCtrl', function ($scope, $stateParams, $log) {
+.controller('RaceCtrl', function ($scope, $stateParams) {
   $scope.race = $stateParams.race;
 
 });

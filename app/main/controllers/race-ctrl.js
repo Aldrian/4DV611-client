@@ -8,7 +8,7 @@
  */
 'use strict';
 angular.module('main')
-.controller('EventExpendedCtrl', function ($scope, $stateParams, $log) {
+.controller('EventExpendedCtrl', function ($scope, $stateParams) {
   $scope.event = $stateParams.event;
 
 });
