@@ -7,7 +7,6 @@
 angular.module('main')
   .controller('ConfigCtrl', function($log, $ionicModal, $ionicPlatform, Config, $window, $scope, LocalStorage) {
 
-    $log.log('Hello from your Controller: ConfigCtrl in module main:. This is your controller:', this);
 
     $ionicModal.fromTemplateUrl('my-modal.html', {
       scope: $scope,

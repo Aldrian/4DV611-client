@@ -12,7 +12,6 @@ angular.module('main')
     templateUrl: 'main/directives/event-item/event-item-template.html',
     restrict: 'E',
     link: function postLink () {
-      console.log('Directive event item loaded');
     }
   };
 });

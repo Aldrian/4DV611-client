@@ -2,7 +2,6 @@
 angular.module('main')
 .service('LocalStorage', function ($log, $window) {
 
-  $log.log('Hello from your Service: LocalStorage in module main');
 
   return {
     set: function(key, value) {

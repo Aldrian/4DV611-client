@@ -73,6 +73,7 @@ function runBlock($log, $window, Config, LocalStorage, AccountManagement, $cordo
         try {
           // Get the UUID here, but don't work on desktop
           uuid = $cordovaDevice.getUUID();
+          $log.log('DeviceID fetched : ' + uuid);
         } catch (err) {
           $log.log('Error: ' + err.message);
         }
@@ -80,11 +81,15 @@ function runBlock($log, $window, Config, LocalStorage, AccountManagement, $cordo
           if (res) {
             //Set the registered key in the localstorage to true
             LocalStorage.set('registred', true);
+            $log.log('User registered');
           } else {
             // TODO : Maybe block the app if the user is not properly registered
             $log.log('Something happened');
           }
         });
+      }
+      else {
+        $log.log('DevideID already registered');
       }
     };
 

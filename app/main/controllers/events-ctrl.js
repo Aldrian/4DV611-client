@@ -10,11 +10,12 @@
 angular.module('main')
   .controller('EventsCtrl', function($log, $scope, EventFetching) {
 
-    $log.log('Hello from your Controller: EventsCtrl in module main:. This is your controller:', this);
 
     var eventPromise = EventFetching.getEvents();
 
     eventPromise.then(function(data) {
+      $log.log('Events recieved : ');
+      $log.log(data);
       $scope.events = data;
     });
 

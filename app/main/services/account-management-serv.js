@@ -5,7 +5,6 @@
 'use strict';
 angular.module('main')
   .service('AccountManagement', function($log, Config, $http) {
-    $log.log('Hello from your Service: Account Management in module main');
 
     var apiHost = Config.ENV.SERVER_URL;
 

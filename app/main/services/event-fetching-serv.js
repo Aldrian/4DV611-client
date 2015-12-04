@@ -5,7 +5,6 @@
 'use strict';
 angular.module('main')
   .service('EventFetching', function($log, Config, $http) {
-     $log.log('Hello from your Service: Event Fetching in module main');
 
     var apiHost = Config.ENV.SERVER_URL;
 

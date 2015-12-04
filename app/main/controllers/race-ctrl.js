@@ -10,6 +10,5 @@
 angular.module('main')
 .controller('EventExpendedCtrl', function ($scope, $stateParams, $log) {
   $scope.event = $stateParams.event;
-  $log.log('Hello from your Controller: EventExpendedCtrl in module main:. This is your controller:', this);
 
 });

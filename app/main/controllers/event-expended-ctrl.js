@@ -10,6 +10,5 @@
 angular.module('main')
 .controller('RaceCtrl', function ($scope, $stateParams, $log) {
   $scope.race = $stateParams.race;
-  $log.log('Hello from your Controller: RaceCtrl in module main:. This is your controller:', this);
 
 });
