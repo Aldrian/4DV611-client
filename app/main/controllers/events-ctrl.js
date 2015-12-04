@@ -8,11 +8,10 @@
  */
 'use strict';
 angular.module('main')
-  .controller('EventsCtrl', function($log, $scope, EventFetching, $cordovaDevice) {
+  .controller('EventsCtrl', function($log, $scope, EventFetching) {
 
     $log.log('Hello from your Controller: EventsCtrl in module main:. This is your controller:', this);
 
-    
     var eventPromise = EventFetching.getEvents();
 
     eventPromise.then(function(data) {
@@ -22,8 +21,4 @@ angular.module('main')
     $scope.getOfferImageAddress = function(endpoint) {
       return EventFetching.apiHost + endpoint;
     };
-
-
-
-
   });

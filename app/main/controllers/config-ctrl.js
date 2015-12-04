@@ -30,7 +30,7 @@ angular.module('main')
         console.log('recent saved state: ' + LocalStorage.getObject('Racetracks'));
         LocalStorage.setObject('Racetracks', $index, $scope.themen[$index].checked);
       };
-      $scope.getCheck = function($index) {
+      $scope.getCheck = function() {
         // get the stored toggle (true or false) and
         // pass it over to the ng-checked in the html
         return LocalStorage.getObject('Racetracks');

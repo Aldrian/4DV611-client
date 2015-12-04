@@ -20,10 +20,10 @@ angular.module('main')
 
     return service;
 
-    function createUser(device_id) {
+    function createUser(deviceId) {
 
       var user = {
-        device_id: device_id
+        deviceId: deviceId
       };
 
       var req = {
@@ -39,7 +39,7 @@ angular.module('main')
       return $http(req).then(createUserComplete)
         .catch(createUserFailed);
 
-      function createUserComplete(response) {
+      function createUserComplete() {
         return true; // Promise for the recieved data, not the real data
       }
 
