@@ -57,4 +57,9 @@ angular.module('main', [
             }
           }
         });
-  });
+  })
+  .run(runBlock);
+
+function runBlock($log) {
+  $log.debug('runBlock end');
+}
