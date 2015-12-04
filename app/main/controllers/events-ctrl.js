@@ -8,7 +8,16 @@
  */
 'use strict';
 angular.module('main')
-  .controller('EventsCtrl', function($log, $scope, EventFetching) {
+  .controller('EventsCtrl', function($log, $scope, EventFetching, $ionicLoading) {
+
+    // Setup the loader
+    $ionicLoading.show({
+      content: 'Loading',
+      animation: 'fade-in',
+      showBackdrop: true,
+      maxWidth: 200,
+      showDelay: 0
+    });
 
 
     var eventPromise = EventFetching.getEvents();
@@ -17,6 +26,8 @@ angular.module('main')
       $log.log('Events recieved : ');
       $log.log(data);
       $scope.events = data;
+      //Hide loader
+      $ionicLoading.hide();
     });
 
     $scope.getOfferImageAddress = function(endpoint) {
