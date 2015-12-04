@@ -60,9 +60,41 @@ angular.module('main', [
   })
   .run(runBlock);
 
-function runBlock($log, $window, Config) {
-  $log.debug('runBlock end');
+function runBlock($log, $window, Config, LocalStorage, AccountManagement, $cordovaDevice) {
+
   document.addEventListener('deviceready', function() {
+    /**************************
+    Check for device id
+    **************************/
+    var init = function() {
+      $log.log('initializing device');
+      if (!LocalStorage.get('registered')) {
+        var uuid = null;
+        try {
+          // Get the UUID here, but don't work on desktop
+          uuid = $cordovaDevice.getUUID();
+        } catch (err) {
+          $log.log('Error: ' + err.message);
+        }
+        AccountManagement.createUser(uuid).then(function(res) {
+          if (res) {
+            //Set the registered key in the localstorage to true
+            LocalStorage.set('registred', true);
+          } else {
+            // TODO : Maybe block the app if the user is not properly registered
+            $log.log('Something happened');
+          }
+        });
+      }
+    };
+
+    ionic.Platform.ready(function() {
+      init();
+    });
+
+    /**************************
+    One Signal config
+    **************************/
     // Enable to debug issues.
     // window.plugins.OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
     var notificationOpenedCallback = function(jsonData) {
@@ -77,4 +109,6 @@ function runBlock($log, $window, Config) {
     // Show an alert box if a notification comes in when the user is in your app.
     $window.plugins.OneSignal.enableInAppAlertNotification(true);
   }, false);
+
+  $log.debug('runBlock end');
 }
