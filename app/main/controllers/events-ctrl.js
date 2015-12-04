@@ -8,20 +8,32 @@
  */
 'use strict';
 angular.module('main')
-  .controller('EventsCtrl', function($log, $scope,EventFetching,  $cordovaDevice) {
+  .controller('EventsCtrl', function($log, $scope, EventFetching, $cordovaDevice, LocalStorage, AccountManagement) {
 
     $log.log('Hello from your Controller: EventsCtrl in module main:. This is your controller:', this);
 
     var init = function() {
       $log.log('initializing device');
-      try {
-        // Get the UUID here, but don't work on desktop
-        $log.log($cordovaDevice.getUUID());
 
-      } catch (err) {
-        $log.log('Error: ' + err.message);
+      if (!LocalStorage.get('registered')) {
+        var uuid = null;
+        try {
+          // Get the UUID here, but don't work on desktop
+          uuid = $cordovaDevice.getUUID();
+        } catch (err) {
+          $log.log('Error: ' + err.message);
+        }
+
+        AccountManagement.createUser(uuid).then(function(res) {
+          if (res) {
+            //Set the registered key in the localstorage to true
+            LocalStorage.set('registred', true);
+          } else {
+            $log.log('Something happened');
+          }
+        });
+
       }
-
     };
 
     ionic.Platform.ready(function() {
