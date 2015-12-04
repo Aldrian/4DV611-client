@@ -13,7 +13,7 @@ angular.module('main')
     '<div class="card" ui-sref="main.eventDetail({event:event})">' +
       '<div class="item item-divider">' +
         '{{event.date | date:\'medium\'}}' +
-        'in' +
+        ' in ' +
         '{{event.name}}' +
     '  </div>' +
       '<div class="item item-text-wrap">' +
