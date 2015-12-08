@@ -3,12 +3,13 @@
     <div class="eventlist">
 
       <img alt="" class="poster" src="main/assets/images/horseracing.jpg"/>
+      <ion-refresher on-refresh="doRefresh()" pulling-text="Pull to refresh..."></ion-refresher>
 
       <!-- list iterating on the array of events,
     for each event add a list-item directive element with the current iterated
     event in parameters-->
       <ion-list>
-        <event-item event="event" ng-repeat="event in events" ng-if="selectedRacetrack(event.track.id)"></event-item>
+        <event-item event="event" ng-if="selectedRacetrack(event.track.id)" ng-repeat="event in events"></event-item>
       </ion-list>
     </div>
 

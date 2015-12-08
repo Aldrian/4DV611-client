@@ -20,6 +20,18 @@ angular.module('main')
       showDelay: 0
     });
 
+    $scope.doRefresh = function() {
+
+
+      EventFetching.getEvents().then(function(data) {
+        $log.log('Events recieved : ');
+        $log.log(data);
+        $scope.events = data;
+      }).finally(function() {
+       // Stop the ion-refresher from spinning
+       $scope.$broadcast('scroll.refreshComplete');
+     });
+    };
 
     var eventPromise = EventFetching.getEvents();
 
@@ -38,8 +50,8 @@ angular.module('main')
       if (storedRacetracks.indexOf(id) === -1) {
         return false;
       } else {
-        return  true;
+        return true;
       }
     };
-    
+
   });
