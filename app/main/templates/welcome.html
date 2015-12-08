@@ -1,0 +1,24 @@
+<ion-modal-view>
+    <ion-header-bar>
+      <h1 class="title">My Modal title</h1>
+    </ion-header-bar>
+  <ion-content>
+    <div class="item">
+      <h2>Hey !</h2>
+      <p>Thank you for downloading this app ! </p>
+      <p>
+        Please select the racetracks you're interested in :
+        <br>
+        (You can still edit them afterwards in the configuration page)
+      </p>
+    </div>
+
+    <ion-checkbox id="{{racetrack.id}}"  ng-repeat="(i, racetrack) in racetracks | orderBy:'name'" type="checkbox">
+      {{ racetrack.name }}
+    </ion-checkbox>
+  </ion-content>
+  <div class="bar bar-footer bar-balanced" ng-click="saveRacetracks()">
+    <div class="title">Done !</div>
+  </div>
+
+</ion-modal-view>

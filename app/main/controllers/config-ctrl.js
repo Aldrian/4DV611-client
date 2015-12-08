@@ -5,8 +5,12 @@
 
 'use strict';
 angular.module('main')
-  .controller('ConfigCtrl', function($log, $ionicModal, $ionicPlatform, Config, $window, $scope, LocalStorage) {
+  .controller('ConfigCtrl', function($log, $ionicModal, $ionicPlatform, Config, $window, $scope, localStorageService, EventFetching) {
 
+    EventFetching.getRacetracks().then(function(data) {
+      $scope.racetracks = data;
+    });
+    var storedRacetracks = localStorageService.get('racetracks');
 
     $ionicModal.fromTemplateUrl('my-modal.html', {
       scope: $scope,
@@ -14,26 +18,47 @@ angular.module('main')
     }).then(function(modal) {
       $scope.modal = modal;
     });
+    $ionicModal.fromTemplateUrl('my-email-modal.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.emailmodal = modal;
+    });
+
+    $scope.openEmailModal = function() {
+      $scope.emailmodal.show();
+    };
+    $scope.closeeEmailModal = function() {
+      $scope.emailmodal.hide();
+    };
     $scope.openRacetracksModal = function() {
       $scope.modal.show();
+    };
+    $scope.isChecked = function(id) {
+      if (storedRacetracks.indexOf(id) === -1) {
+        return false;
+      } else {
+        return  true;
+      }
+    };
 
-      //List of racing tracks
-      $scope.themen = Config.ENV.RACETRACKS;
-
-      $scope.updateThemaLocalStorage = function($index) {
-        // Debug: call by index dynamically
-        console.log('clicked index: ' + $index);
-        console.log($scope.themen[$index].name);
-        console.log('current state: ' + $scope.themen[$index].checked);
-        // Actually doing the localStorage: set item to true/false
-        console.log('recent saved state: ' + LocalStorage.getObject('Racetracks'));
-        LocalStorage.setObject('Racetracks', $index, $scope.themen[$index].checked);
-      };
-      $scope.getCheck = function() {
-        // get the stored toggle (true or false) and
-        // pass it over to the ng-checked in the html
-        return LocalStorage.getObject('Racetracks');
-      };
+    $scope.saveRacetracks = function() {
+      var selectedRacetracks = [];
+      //Forge the array of selected racetracks
+      $scope.racetracks.forEach(function(racetrack) {
+        if ($('#' + racetrack.id).find("input[type='checkbox']").is(":checked")) {
+          selectedRacetracks.push(racetrack.id);
+        }
+      });
+      if (selectedRacetracks == []) {
+        //TODO :: Display an error message if nothing is selected
+        return false;
+      }
+      //Record the choices in the Local storage and set selectedRacetracks to true
+      localStorageService.set('racetracks', selectedRacetracks);
+      localStorageService.set('registered', true);
+      //Move on
+      $scope.closeModal();
     };
     $scope.closeModal = function() {
       $scope.modal.hide();

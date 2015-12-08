@@ -8,7 +8,8 @@
  */
 'use strict';
 angular.module('main')
-  .controller('EventsCtrl', function($log, $scope, EventFetching, $ionicLoading) {
+  .controller('EventsCtrl', function($log, $scope, EventFetching, $ionicLoading, localStorageService) {
+    var storedRacetracks = localStorageService.get('racetracks');
 
     // Setup the loader
     $ionicLoading.show({
@@ -33,4 +34,12 @@ angular.module('main')
     $scope.getOfferImageAddress = function(endpoint) {
       return EventFetching.apiHost + endpoint;
     };
+    $scope.selectedRacetrack = function(id) {
+      if (storedRacetracks.indexOf(id) === -1) {
+        return false;
+      } else {
+        return  true;
+      }
+    };
+    
   });
