@@ -14,6 +14,22 @@ angular.module('main')
     }).then(function(modal) {
       $scope.modal = modal;
     });
+    $ionicModal.fromTemplateUrl('my-email-modal.html', {
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.emailmodal = modal;
+    });
+
+    $scope.openEmailModal = function() {
+      $scope.emailmodal.show();
+
+
+    };
+    $scope.closeeEmailModal = function() {
+      $scope.emailmodal.hide();
+    };
+
     $scope.openRacetracksModal = function() {
       $scope.modal.show();
 
