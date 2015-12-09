@@ -14,7 +14,8 @@ angular.module('main')
      */
     var service = {
       apiHost: apiHost,
-      createUser: createUser
+      createUser: createUser,
+      addEmail: addEmail
     };
 
     return service;
@@ -44,6 +45,37 @@ angular.module('main')
 
       function createUserFailed(error) {
         $log.error('XHR Failed for createUser.\n' + angular.toJson(error.data, true));
+        return false;
+      }
+    }
+
+
+    function addEmail(deviceId, email) {
+
+      var user = {
+        deviceId: deviceId,
+        email: email
+      };
+
+      var req = {
+        method: 'PUT',
+        url: apiHost + 'users/',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: user
+      };
+
+
+      return $http(req).then(addEmailComplete)
+        .catch(addEmailFailed);
+
+      function addEmailComplete() {
+        return true; // Promise for the recieved data, not the real data
+      }
+
+      function addEmailFailed(error) {
+        $log.error('XHR Failed for addEmail.\n' + angular.toJson(error.data, true));
         return false;
       }
     }

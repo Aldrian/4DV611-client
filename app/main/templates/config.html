@@ -11,26 +11,26 @@
         <a ng-click="openRacetracksModal()">Select your racetracks</a>
       </ion-item>
       <ion-item>
-        Bla
+        <a ng-click="openEmailModal()" class="button button-icon icon ion-email">
+        Register Your E-mail
+        </a>
       </ion-item>
       <ion-item>
         Bla
       </ion-item>
-
     </ion-list>
-
   </ion-content>
 </ion-view>
 
 
 
 <script id="my-modal.html" type="text/ng-template">
-    <ion-modal-view>
+  <ion-modal-view>
     <ion-header-bar>
       <h1 class="title">Select your tracks</h1>
     </ion-header-bar>
     <ion-content>
-      <ion-checkbox  ng-checked="isChecked(racetrack.id)" id="{{racetrack.id}}"  ng-repeat="racetrack in racetracks | orderBy:'name'" type="checkbox">
+      <ion-checkbox ng-checked="isChecked(racetrack.id)" id="{{racetrack.id}}" ng-repeat="racetrack in racetracks | orderBy:'name'" type="checkbox">
         {{ racetrack.name }}
       </ion-checkbox>
     </ion-content>
@@ -41,23 +41,24 @@
   </ion-modal-view>
 </script>
 
-
+<!--Email Modal for User Email registartion-->
 <script id="my-email-modal.html" type="text/ng-template">
   <ion-modal-view>
     <ion-header-bar>
-      <div class="bar bar-header bar-balanced">
+      <div class="bar bar-header bar-positive">
         <div class="title"></div>
         <h1 class="title">Register your E-mail</h1>
       </div>
     </ion-header-bar>
     <ion-content>
-      <label class="item item-input">
-        <span class="input-label">Email</span>
-        <input type="email">
-      </label>
+      <div class="item item-input-inset">
+        <label class="item-input-wrapper">
+          <input id="emailField" type="text" placeholder="Email">
+        </label>
+      </div>
     </ion-content>
-    <div class="bar bar-footer bar-balanced" ng-click="closeeEmailModal()">
-      <div class="title">Done !</div>
+<div class="bar bar-footer bar-positive" ng-click="saveEmail()">>
+      <div class="title">Submit</div>
     </div>
   </ion-modal-view>
 </script>

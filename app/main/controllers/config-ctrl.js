@@ -5,7 +5,7 @@
 
 'use strict';
 angular.module('main')
-  .controller('ConfigCtrl', function($log, $ionicModal, $ionicPlatform, Config, $window, $scope, localStorageService, EventFetching) {
+  .controller('ConfigCtrl', function($log, $ionicModal, $ionicPlatform, Config, $window, $scope, localStorageService, EventFetching, AccountManagement) {
 
     EventFetching.getRacetracks().then(function(data) {
       $scope.racetracks = data;
@@ -28,7 +28,7 @@ angular.module('main')
     $scope.openEmailModal = function() {
       $scope.emailmodal.show();
     };
-    $scope.closeeEmailModal = function() {
+    $scope.closeEmailModal = function() {
       $scope.emailmodal.hide();
     };
     $scope.openRacetracksModal = function() {
@@ -38,7 +38,7 @@ angular.module('main')
       if (storedRacetracks.indexOf(id) === -1) {
         return false;
       } else {
-        return  true;
+        return true;
       }
     };
 
@@ -46,19 +46,38 @@ angular.module('main')
       var selectedRacetracks = [];
       //Forge the array of selected racetracks
       $scope.racetracks.forEach(function(racetrack) {
-        if ($('#' + racetrack.id).find("input[type='checkbox']").is(":checked")) {
+        if ($('#' + racetrack.id).find('input[type=\"checkbox\"]').is(":checked")) {
           selectedRacetracks.push(racetrack.id);
         }
       });
-      if (selectedRacetracks == []) {
+      if (selectedRacetracks === []) {
         //TODO :: Display an error message if nothing is selected
         return false;
       }
       //Record the choices in the Local storage and set selectedRacetracks to true
       localStorageService.set('racetracks', selectedRacetracks);
-      localStorageService.set('registered', true);
       //Move on
       $scope.closeModal();
+    };
+    $scope.saveEmail = function() {
+      //Get email field value
+      var email = $("#emailField").val();
+      var uuid = localStorageService.get('uuid');
+      if (uuid) {
+        // We are on mobile and deviceid is registered, so we can send the email
+        AccountManagement.addEmail(uuid, email).then(function(res) {
+          if (res) {
+            //Set the registered key in the localstorage to true
+            localStorageService.set('email', email);
+            $log.log('Email registered');
+          } else {
+            // TODO : Maybe block the app if the user is not properly registered
+            $log.log('Something happened');
+          }
+        });
+      }
+      //Move on
+      $scope.closeEmailModal();
     };
     $scope.closeModal = function() {
       $scope.modal.hide();
