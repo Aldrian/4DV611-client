@@ -85,7 +85,7 @@ function runBlock($log, $window, Config, localStorageService, AccountManagement,
     **************************/
     var init = function() {
       $log.log('initializing device');
-      if (!localStorageService.get('registered')) {
+      if (!localStorageService.get('uuid')) {
         var uuid = null;
         try {
           // Get the UUID here, but don't work on desktop
@@ -97,7 +97,7 @@ function runBlock($log, $window, Config, localStorageService, AccountManagement,
         AccountManagement.createUser(uuid).then(function(res) {
           if (res) {
             //Set the registered key in the localstorage to true
-            localStorageService.set('registred', true);
+            localStorageService.set('deviceID', uuid);
             $log.log('User registered');
           } else {
             // TODO : Maybe block the app if the user is not properly registered
