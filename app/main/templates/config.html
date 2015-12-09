@@ -25,12 +25,12 @@
 
 
 <script id="my-modal.html" type="text/ng-template">
-    <ion-modal-view>
+  <ion-modal-view>
     <ion-header-bar>
       <h1 class="title">Select your tracks</h1>
     </ion-header-bar>
     <ion-content>
-      <ion-checkbox  ng-checked="isChecked(racetrack.id)" id="{{racetrack.id}}"  ng-repeat="racetrack in racetracks | orderBy:'name'" type="checkbox">
+      <ion-checkbox ng-checked="isChecked(racetrack.id)" id="{{racetrack.id}}" ng-repeat="racetrack in racetracks | orderBy:'name'" type="checkbox">
         {{ racetrack.name }}
       </ion-checkbox>
     </ion-content>

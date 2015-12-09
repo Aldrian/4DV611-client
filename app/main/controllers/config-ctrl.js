@@ -38,7 +38,7 @@ angular.module('main')
       if (storedRacetracks.indexOf(id) === -1) {
         return false;
       } else {
-        return  true;
+        return true;
       }
     };
 

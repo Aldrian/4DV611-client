@@ -22,7 +22,7 @@ angular.module('main')
     function createUser(deviceId) {
 
       var user = {
-        device_id: deviceId
+        deviceId: deviceId
       };
 
       var req = {
