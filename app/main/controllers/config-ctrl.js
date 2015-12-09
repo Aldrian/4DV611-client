@@ -44,10 +44,14 @@ angular.module('main')
 
     $scope.saveRacetracks = function() {
       var selectedRacetracks = [];
-      //Forge the array of selected racetracks
+      var tagList = {};
+      //Forge the array of selected racetracks and taglist object
       $scope.racetracks.forEach(function(racetrack) {
-        if ($('#' + racetrack.id).find('input[type=\"checkbox\"]').is(":checked")) {
+        if (angular.element('#' + racetrack.id).find('input[type=\"checkbox\"]').is(':checked')) {
           selectedRacetracks.push(racetrack.id);
+          tagList[racetrack.name] = true;
+        } else {
+          tagList[racetrack.name] = false;
         }
       });
       if (selectedRacetracks === []) {
@@ -56,12 +60,19 @@ angular.module('main')
       }
       //Record the choices in the Local storage and set selectedRacetracks to true
       localStorageService.set('racetracks', selectedRacetracks);
+      // Send taglist to OneSignal
+      $log.log(tagList);
+      if (localStorageService.get('uuid')) {
+        // We are on mobile and deviceid is registered, so we can send the tags
+        $log.log('Send tag request');
+        window.plugins.OneSignal.sendTags(tagList);
+      }
       //Move on
       $scope.closeModal();
     };
     $scope.saveEmail = function() {
       //Get email field value
-      var email = $("#emailField").val();
+      var email = angular.element('#emailField').val();
       var uuid = localStorageService.get('uuid');
       if (uuid) {
         // We are on mobile and deviceid is registered, so we can send the email

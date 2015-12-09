@@ -96,7 +96,7 @@ function runBlock($log, $window, Config, localStorageService, AccountManagement,
         AccountManagement.createUser(uuid).then(function(res) {
           if (res) {
             //Set the registered key in the localstorage to true
-            localStorageService.set('deviceID', uuid);
+            localStorageService.set('uuid', uuid);
             $log.log('User registered');
           } else {
             // TODO : Maybe block the app if the user is not properly registered
