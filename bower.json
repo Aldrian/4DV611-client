@@ -10,7 +10,8 @@
     "angular-translate": "~2.8.1",
     "angular-translate-loader-static-files": "~2.8.1",
     "angular-local-storage": "~0.2.3",
-    "jquery": "~2.1.4"
+    "jquery": "~2.1.4",
+    "ionic-material": "~0.4.2"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.5"

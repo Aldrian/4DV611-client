@@ -1,53 +1,62 @@
 <ion-view view-title="Race">
 
   <ion-content>
-
-    <div class="list card">
-
-      <div class="item">
-        <h2>{{race.startTime | date: 'medium'}}</h2>
-        <p>{{race.highlight}}</p>
-      </div>
-
-
-
-      <div class="item item-text-wrap">
-        Race number {{race.number}} <br>
-        {{race.informations}}
-      </div>
-
-      <div class="item item-text-wrap">
-        <h2>Reserv Order</h2>
-        {{race.reservOrder}}
-      </div>
-
-      <div class="item item-text-wrap">
-        <h2>Short Informations</h2>
-        {{race.shortInformation}}
-      </div>
-
-
-
-
-      <div class="item item-divider">
-        {{race.horseCount}} horses :
-      </div>
-
-      <div class="item item-text-wrap" ng-repeat="horse in race.startList">
-        <h2>{{horse.horse}}</h2>
-        Sex : {{horse.sex}}
-        <br>
-        Driver : {{horse.driver}}
-        <br>
-        Trainer : {{horse.trainer}}
-        <br>
-        #{{horse.startNumber}}, {{horse.age}}yo
-        <br>
-        {{horse.totalWinnings}} wins
-      </div>
-
-
+    <div class="mid-bar dark-bg z1 padding">
+      <h3>{{race.startTime | date: 'medium'}}</h3>
+      <p>{{race.information}}</p>
     </div>
+
+    <div class="content double-padding">
+      <h4 class="positive">Race number
+        {{race.number}}</h4>
+      <p class="text-muted">
+        {{race.shortInformations}}
+      </p>
+    </div>
+
+    <div class="content double-padding">
+      <h4 class="positive">Reserv Order</h4>
+      <p class="text-muted">
+        {{race.reservOrder}}
+      </p>
+    </div>
+    <div class="content double-padding">
+      <h4 class="positive">Short Informations</h4>
+      <p class="text-muted">
+        {{race.shortInformation}}
+      </p>
+    </div>
+
+    <div class="mid-bar calm-bg z1 padding">
+      <h3>Horses running</h3>
+    </div>
+
+    <div class="card" ng-repeat="horse in race.startList" ui-sref="main.raceDetail({race:race})">
+      <div class="item item-text-wrap stable-bg waves-effect waves-block">
+        <p>
+          <strong>{{horse.horse}}</strong>
+          <br>
+          Driver :
+          {{horse.driver}}
+        </p>
+        <p class="text-muted">
+          Trainer :
+          {{horse.trainer}}
+        </p>
+        <div class="card-footer text-right">
+          <i ng-if="horse.sex == 'S'" class="icon ion-female assertive"></i>
+          <i ng-if="horse.sex == 'V' || horse.sex == 'H'" class="icon ion-male positive"></i>
+          <i class="icon ion-pound dark"></i>
+          {{horse.startNumber}}
+          <div class="pull-left">
+            <i class="ion-ribbon-b"></i>
+            {{horse.totalWinnings}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+
   </ion-content>
 
 </ion-view>

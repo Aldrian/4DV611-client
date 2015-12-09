@@ -10,5 +10,5 @@
 angular.module('main')
 .controller('EventExpendedCtrl', function ($scope, $stateParams) {
   $scope.event = $stateParams.event;
-
+  console.log($scope.event);
 });

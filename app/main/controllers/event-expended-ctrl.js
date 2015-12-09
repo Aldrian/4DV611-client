@@ -10,5 +10,6 @@
 angular.module('main')
 .controller('RaceCtrl', function ($scope, $stateParams) {
   $scope.race = $stateParams.race;
+  console.log($scope.race);
 
 });
