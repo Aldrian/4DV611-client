@@ -11,6 +11,15 @@ angular.module('main')
   .controller('EventsCtrl', function($log, $scope, EventFetching, $ionicLoading, localStorageService) {
     var storedRacetracks = localStorageService.get('racetracks');
 
+    var selectedRacetrack = function(racetrack) {
+      if (storedRacetracks.indexOf(racetrack.track.id) === -1) {
+        return false;
+      } else {
+        return true;
+      }
+    };
+
+
     // Setup the loader
     $ionicLoading.show({
       content: 'Loading',
@@ -21,12 +30,13 @@ angular.module('main')
     });
 
     $scope.doRefresh = function() {
-
-
+      storedRacetracks = localStorageService.get('racetracks');
+      
       EventFetching.getEvents().then(function(data) {
         $log.log('Events recieved : ');
         $log.log(data);
-        $scope.events = data;
+        $scope.events = data.filter(selectedRacetrack);
+        $scope.eventCount = $scope.events.length;
       }).finally(function() {
        // Stop the ion-refresher from spinning
        $scope.$broadcast('scroll.refreshComplete');
@@ -38,7 +48,8 @@ angular.module('main')
     eventPromise.then(function(data) {
       $log.log('Events recieved : ');
       $log.log(data);
-      $scope.events = data;
+      $scope.events = data.filter(selectedRacetrack);
+      $scope.eventCount = $scope.events.length;
       //Hide loader
       $ionicLoading.hide();
     });
@@ -46,12 +57,6 @@ angular.module('main')
     $scope.getOfferImageAddress = function(endpoint) {
       return EventFetching.apiHost + endpoint;
     };
-    $scope.selectedRacetrack = function(id) {
-      if (storedRacetracks.indexOf(id) === -1) {
-        return false;
-      } else {
-        return true;
-      }
-    };
+
 
   });

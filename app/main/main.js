@@ -13,15 +13,14 @@ angular.module('main', [
       .state('main', {
         url: '',
         abstract: true,
-        templateUrl: 'main/templates/menu.html'
-
+        templateUrl: 'main/templates/menu.html',
+        controller: 'EventsCtrl as ctrl'
       })
       .state('main.events', {
         url: '/events',
         views: {
           'pageContent': {
-            templateUrl: 'main/templates/event-list.html',
-            controller: 'EventsCtrl as ctrl'
+            templateUrl: 'main/templates/event-list.html'
           }
         },
 
@@ -68,7 +67,7 @@ angular.module('main', [
   .run(runBlock);
 
 function runBlock($log, $window, Config, localStorageService, AccountManagement, $cordovaDevice, $location) {
-  
+
   /**************************
   Check for racetrack selection
   **************************/
