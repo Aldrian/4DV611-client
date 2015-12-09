@@ -7,7 +7,7 @@ For example, you might change some of the default colors:
 $light: #eee !default;
 $stable: #007831 !default;
 $positive: #eeba30 !default;
-$calm: #43cee6 !default;
+$calm: lighten($positive, 10%) !default;
 $balanced: #66cc33 !default;
 $energized: #740001 !default;
 $assertive: #ae0001 !default;
@@ -34,5 +34,28 @@ $ionicons-font-path: "../assets/fonts" !default;
 }
 .item.item-text-wrap{
   background-color: $positive;
-  border-radius: 2%;
+  border:solid!important;
+    border-radius: 5%;
+}
+.item.item-icon-right{
+  background-color: $calm;
+  border:solid!important;
+    border-radius: 5%;
+}
+.side-menu-content{
+  background-color: $royal;
+  .menu-list{
+    background-color: $calm;
+  }
+}
+.bar-royal{
+  border:solid!important;
+  .title{
+    color:white !important;
+      font-size:25px !important;
+      font-weight:200 !important;
+  }
+}
+.list.card{
+  background-color: $dark;
 }
