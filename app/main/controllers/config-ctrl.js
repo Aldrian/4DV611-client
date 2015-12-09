@@ -46,11 +46,11 @@ angular.module('main')
       var selectedRacetracks = [];
       //Forge the array of selected racetracks
       $scope.racetracks.forEach(function(racetrack) {
-        if ($('#' + racetrack.id).find("input[type='checkbox']").is(":checked")) {
+        if ($('#' + racetrack.id).find('input[type=\"checkbox\"]').is(":checked")) {
           selectedRacetracks.push(racetrack.id);
         }
       });
-      if (selectedRacetracks == []) {
+      if (selectedRacetracks === []) {
         //TODO :: Display an error message if nothing is selected
         return false;
       }
