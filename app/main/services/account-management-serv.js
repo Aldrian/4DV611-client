@@ -1,6 +1,6 @@
 /**
- * This is the event fetching service
- * The calls to the api in order to fetch the events on app start will be made here
+ * This is the account management service
+ * The calls to the api in order to create an user on the DB and update his infos
  */
 'use strict';
 angular.module('main')
@@ -22,12 +22,12 @@ angular.module('main')
     function createUser(deviceId) {
 
       var user = {
-        deviceId: deviceId
+        device_id: deviceId
       };
 
       var req = {
         method: 'POST',
-        url: apiHost + 'users',
+        url: apiHost + 'users/',
         headers: {
           'Content-Type': 'application/json'
         },

@@ -14,7 +14,8 @@ angular.module('main')
      */
     var service = {
       apiHost: apiHost,
-      getEvents: getEvents
+      getEvents: getEvents,
+      getRacetracks: getRacetracks
     };
 
     return service;
@@ -30,6 +31,21 @@ angular.module('main')
       }
 
       function getEventsFailed(error) {
+        $log.error('XHR Failed for getEvents.\n' + angular.toJson(error.data, true));
+      }
+    }
+
+    function getRacetracks() {
+
+      return $http.get(apiHost + 'tracks')
+        .then(getRacetracksComplete)
+        .catch(getRacetracksFailed);
+
+      function getRacetracksComplete(response) {
+        return response.data; // Promise for the recieved data, not the real data
+      }
+
+      function getRacetracksFailed(error) {
         $log.error('XHR Failed for getEvents.\n' + angular.toJson(error.data, true));
       }
     }

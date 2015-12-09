@@ -13,16 +13,18 @@ angular.module('main', [
       .state('main', {
         url: '',
         abstract: true,
-        templateUrl: 'main/templates/menu.html',
-        controller: 'EventsCtrl as menu'
+        templateUrl: 'main/templates/menu.html'
+
       })
       .state('main.events', {
         url: '/events',
         views: {
           'pageContent': {
-            templateUrl: 'main/templates/event-list.html'
+            templateUrl: 'main/templates/event-list.html',
+            controller: 'EventsCtrl as ctrl'
           }
-        }
+        },
+
       })
       .state('main.eventDetail', {
         url: '/events/detail',
@@ -56,11 +58,26 @@ angular.module('main', [
             controller: 'ConfigCtrl as ctrl'
           }
         }
+      })
+      .state('welcome', {
+        url: '/welcome',
+        templateUrl: 'main/templates/welcome.html',
+        controller: 'WelcomeCtrl as ctrl'
       });
   })
   .run(runBlock);
 
-function runBlock($log, $window, Config, LocalStorage, AccountManagement, $cordovaDevice) {
+function runBlock($log, $window, Config, localStorageService, AccountManagement, $cordovaDevice, $location) {
+  
+  /**************************
+  Check for racetrack selection
+  **************************/
+  if (!localStorageService.get('registered')) {
+    //Block the execution and display the racetrack selection template
+    $location.path('/welcome');
+  } else {
+    $log.log('Racetracks already registered, moving on');
+  }
 
   document.addEventListener('deviceready', function() {
     /**************************
@@ -87,8 +104,7 @@ function runBlock($log, $window, Config, LocalStorage, AccountManagement, $cordo
             $log.log('Something happened');
           }
         });
-      }
-      else {
+      } else {
         $log.log('DevideID already registered');
       }
     };
@@ -113,6 +129,7 @@ function runBlock($log, $window, Config, LocalStorage, AccountManagement, $cordo
 
     // Show an alert box if a notification comes in when the user is in your app.
     $window.plugins.OneSignal.enableInAppAlertNotification(true);
+
   }, false);
 
   $log.debug('runBlock end');
