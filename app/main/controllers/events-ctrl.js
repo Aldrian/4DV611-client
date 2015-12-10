@@ -8,7 +8,7 @@
  */
 'use strict';
 angular.module('main')
-  .controller('EventsCtrl', function($log, $scope, EventFetching, $ionicLoading, localStorageService) {
+  .controller('EventsCtrl', function($log, $scope, EventFetching, $ionicLoading, localStorageService, ionicMaterialMotion) {
     var storedRacetracks = localStorageService.get('racetracks');
 
     var selectedRacetrack = function(racetrack) {
@@ -22,21 +22,24 @@ angular.module('main')
 
     // Setup the loader
     $ionicLoading.show({
+      template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
       content: 'Loading',
-      animation: 'fade-in',
-      showBackdrop: true,
+      showBackdrop: false,
       maxWidth: 200,
       showDelay: 0
     });
 
     $scope.doRefresh = function() {
       storedRacetracks = localStorageService.get('racetracks');
-      
+
       EventFetching.getEvents().then(function(data) {
         $log.log('Events recieved : ');
         $log.log(data);
         $scope.events = data.filter(selectedRacetrack);
         $scope.eventCount = $scope.events.length;
+        setTimeout(function () {
+          ionicMaterialMotion.blinds();
+        }, 100);
       }).finally(function() {
        // Stop the ion-refresher from spinning
        $scope.$broadcast('scroll.refreshComplete');
@@ -52,6 +55,9 @@ angular.module('main')
       $scope.eventCount = $scope.events.length;
       //Hide loader
       $ionicLoading.hide();
+      setTimeout(function () {
+        ionicMaterialMotion.blinds();
+      }, 100);
     });
 
     $scope.getOfferImageAddress = function(endpoint) {

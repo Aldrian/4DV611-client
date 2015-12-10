@@ -1,15 +1,13 @@
 <ion-view view-title="Race events">
   <ion-content>
     <div class="eventlist">
-
-      <img alt="" class="poster" src="main/assets/images/horseracing.jpg"/>
       <ion-refresher on-refresh="doRefresh()" pulling-text="Pull to refresh..."></ion-refresher>
 
-      <!-- list iterating on the array of events,
-    for each event add a list-item directive element with the current iterated
-    event in parameters-->
-      <ion-list>
-        <event-item event="event" ng-repeat="event in events"></event-item>
+      <ion-list class="animate-blinds">
+        <ion-item class="item card" ng-repeat="event in events" ui-sref="main.eventDetail({event:event})">
+          <h2>{{event.track.name}}</h2>
+          <p>{{event.date | date:'medium'}}</p>
+        </ion-item>
       </ion-list>
     </div>
 
