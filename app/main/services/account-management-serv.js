@@ -59,7 +59,7 @@ angular.module('main')
           username: null,
           password: null,
           deviceId: deviceId,
-          role: null,
+          role: 2,
           trackId: null,
           enabled: true
       };
@@ -94,7 +94,7 @@ angular.module('main')
         username: null,
         password: null,
         deviceId: deviceId,
-        role: null,
+        role: 2,
         trackId: null,
         enabled: true
       };
