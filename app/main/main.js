@@ -4,8 +4,8 @@ angular.module('main', [
     'ngCordova',
     'ui.router',
   ])
-  .config(function($stateProvider, $urlRouterProvider) {
-
+  .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+    $httpProvider.interceptors.push('APIInterceptor');
     // ROUTING with ui.router
     $urlRouterProvider.otherwise('/events');
     $stateProvider
@@ -63,6 +63,8 @@ angular.module('main', [
         templateUrl: 'main/templates/welcome.html',
         controller: 'WelcomeCtrl as ctrl'
       });
+
+
   })
   .run(runBlock);
 
@@ -78,45 +80,46 @@ function runBlock($log, $window, Config, localStorageService, AccountManagement,
     $log.log('Racetracks already registered, moving on');
   }
 
-  document.addEventListener('deviceready', function() {
-    /**************************
-    Check for device id
-    **************************/
-    var init = function() {
-      $log.log('initializing device');
-      if (!localStorageService.get('uuid')) {
-        var uuid = null;
-        try {
-          // Get the UUID here, but don't work on desktop
-          uuid = $cordovaDevice.getUUID();
-          $log.log('DeviceID fetched : ' + uuid);
-        } catch (err) {
-          $log.log('Error: ' + err.message);
-        }
-        AccountManagement.createUser(uuid).then(function(res) {
-          if (res) {
-            //Set the registered key in the localstorage to true
-            localStorageService.set('uuid', uuid);
-            $log.log('User registered');
-          } else {
-            // TODO : Maybe block the app if the user is not properly registered
-            $log.log('Something happened');
-          }
-        });
+  /**************************
+  Check for device id
+  **************************/
+  var init = function() {
+    $log.log('initializing device');
+    if (!localStorageService.get('uuid')) {
+      var uuid = null;
+      if (window.cordova) {
+        uuid = $cordovaDevice.getUUID();
       } else {
-        $log.log('DevideID already registered');
+        uuid = 'chromedebug';
       }
-    };
 
-    ionic.Platform.ready(function() {
-      init();
-    });
+      $log.log('DeviceID fetched : ' + uuid);
 
+      AccountManagement.createUser(uuid).then(function(res) {
+        if (res) {
+          //Set the registered key in the localstorage to true
+          localStorageService.set('uuid', uuid);
+          $log.log('User registered');
+        } else {
+          // TODO : Maybe block the app if the user is not properly registered
+          $log.log('Something happened');
+        }
+      });
+    } else {
+      $log.log('DeviceID '+ localStorageService.get('uuid') + ' already registered');
+    }
+  };
+
+  ionic.Platform.ready(function() {
+    init();
+  });
+
+
+  if (window.cordova) {
     /**************************
     One Signal config
     **************************/
-    // Enable to debug issues.
-    //$window.plugins.OneSignal.setLogLevel({logLevel: 4, visualLevel: 4});
+
     var notificationOpenedCallback = function(jsonData) {
       $log.log('didReceiveRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
     };
@@ -128,8 +131,9 @@ function runBlock($log, $window, Config, localStorageService, AccountManagement,
 
     // Show an alert box if a notification comes in when the user is in your app.
     $window.plugins.OneSignal.enableInAppAlertNotification(true);
-
-  }, false);
+  } else {
+    // running in dev mode
+  }
 
   $log.debug('runBlock end');
 }
