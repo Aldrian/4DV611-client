@@ -33,3 +33,16 @@ $ionicons-font-path: "../assets/fonts" !default;
 .loading-container .loading{
   background-color: transparent;
 }
+
+.tab-item {
+  &.assertive {
+    background-color: $assertive;
+    color: white;
+    max-width: inherit;
+  }
+  &.balanced{
+    background-color: $balanced;
+    color: white;
+    max-width: inherit;
+  }
+}

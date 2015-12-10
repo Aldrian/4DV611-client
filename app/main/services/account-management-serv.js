@@ -15,7 +15,8 @@ angular.module('main')
     var service = {
       apiHost: apiHost,
       createUser: createUser,
-      addEmail: addEmail
+      addEmail: addEmail,
+      deleteEmail: deleteEmail
     };
 
     return service;
@@ -53,8 +54,14 @@ angular.module('main')
     function addEmail(deviceId, email) {
 
       var user = {
-        deviceId: deviceId,
-        email: email
+
+          email: email,
+          username: null,
+          password: null,
+          deviceId: deviceId,
+          role: null,
+          trackId: null,
+          enabled: true
       };
 
       var req = {
@@ -76,6 +83,41 @@ angular.module('main')
 
       function addEmailFailed(error) {
         $log.error('XHR Failed for addEmail.\n' + angular.toJson(error.data, true));
+        return false;
+      }
+    }
+
+    function deleteEmail(deviceId) {
+
+      var user = {
+        email: '',
+        username: null,
+        password: null,
+        deviceId: deviceId,
+        role: null,
+        trackId: null,
+        enabled: true
+      };
+
+      var req = {
+        method: 'PUT',
+        url: apiHost + 'users/',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: user
+      };
+
+
+      return $http(req).then(deleteEmailComplete)
+        .catch(deleteEmailFailed);
+
+      function deleteEmailComplete() {
+        return true; // Promise for the recieved data, not the real data
+      }
+
+      function deleteEmailFailed(error) {
+        $log.error('XHR Failed for deleteEmail.\n' + angular.toJson(error.data, true));
         return false;
       }
     }

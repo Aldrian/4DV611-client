@@ -12,6 +12,13 @@ angular.module('main')
     });
     var storedRacetracks = localStorageService.get('racetracks');
 
+    if (localStorageService.get('email')) {
+      // then the user has registered his email
+      $scope.registeredEmail = true;
+    } else {
+      $scope.registeredEmail = false;
+    }
+
     $ionicModal.fromTemplateUrl('my-modal.html', {
       scope: $scope,
       animation: 'slide-in-up'
@@ -60,36 +67,64 @@ angular.module('main')
       }
       //Record the choices in the Local storage and set selectedRacetracks to true
       localStorageService.set('racetracks', selectedRacetracks);
-      // Send taglist to OneSignal
-      $log.log(tagList);
-      if (localStorageService.get('uuid')) {
-        // We are on mobile and deviceid is registered, so we can send the tags
-        $log.log('Send tag request');
+      if (window.cordova) {
+        // Running on device
+        // Send taglist to OneSignal
         window.plugins.OneSignal.sendTags(tagList);
       }
       //Move on
       $scope.closeModal();
     };
-    $scope.saveEmail = function() {
-      //Get email field value
-      var email = angular.element('#emailField').val();
-      var uuid = localStorageService.get('uuid');
-      if (uuid) {
+    $scope.saveEmail = function(action) {
+      if (action === 'confirm') {
+        //Get email field value
+        var email = angular.element('#emailField').val();
+        var uuid = localStorageService.get('uuid');
+
         // We are on mobile and deviceid is registered, so we can send the email
         AccountManagement.addEmail(uuid, email).then(function(res) {
           if (res) {
             //Set the registered key in the localstorage to true
             localStorageService.set('email', email);
+            $scope.registeredEmail = true;
             $log.log('Email registered');
           } else {
             // TODO : Maybe block the app if the user is not properly registered
             $log.log('Something happened');
           }
         });
+
+        //Move on
+        $scope.closeEmailModal();
+      } else {
+        //Move on
+        $scope.closeEmailModal();
       }
-      //Move on
-      $scope.closeEmailModal();
+
     };
+    $scope.deleteEmail = function(action) {
+      if (action === 'confirm') {
+        var uuid = localStorageService.get('uuid');
+
+        AccountManagement.deleteEmail(uuid).then(function(res) {
+          if (res) {
+            //Set the registered key in the localstorage to true
+            localStorageService.remove('email');
+            $scope.registeredEmail = false;
+            $log.log('Email unregistered');
+          } else {
+            // TODO : Maybe block the app if the user is not properly registered
+            $log.log('Something happened');
+          }
+        });
+        //Move on
+        $scope.closeEmailModal();
+      } else {
+        //Move on
+        $scope.closeEmailModal();
+      }
+    };
+
     $scope.closeModal = function() {
       $scope.modal.hide();
     };

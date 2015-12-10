@@ -9,15 +9,16 @@
       </ion-item>
       <ion-item class="item item-icon-left">
         <i class="icon ion-email"></i>
-        <span ng-click="openEmailModal()">
-        Register Your E-mail
-      </span>
+        <span ng-if="registeredEmail" ng-click="openEmailModal()">
+          Unregister Your E-mail
+        </span>
+        <span ng-if="!registeredEmail" ng-click="openEmailModal()">
+          Register Your E-mail
+        </span>
       </ion-item>
     </ion-list>
   </ion-content>
 </ion-view>
-
-
 
 <script id="my-modal.html" type="text/ng-template">
   <ion-modal-view>
@@ -25,7 +26,7 @@
       <h1 class="title">Select your tracks</h1>
     </ion-header-bar>
     <ion-content>
-      <ion-checkbox ng-checked="isChecked(racetrack.id)" id="{{racetrack.id}}" ng-repeat="racetrack in racetracks | orderBy:'name'" type="checkbox">
+      <ion-checkbox id="{{racetrack.id}}" ng-checked="isChecked(racetrack.id)" ng-repeat="racetrack in racetracks | orderBy:'name'" type="checkbox">
         {{ racetrack.name }}
       </ion-checkbox>
     </ion-content>
@@ -40,21 +41,38 @@
 <script id="my-email-modal.html" type="text/ng-template">
   <ion-modal-view>
     <ion-header-bar>
-      <div class="bar bar-header bar-energized">
+      <div class="bar bar-header bar-positive">
         <div class="title"></div>
-        <h1 class="title">Register your E-mail</h1>
+        <h1 class="title" ng-if="registeredEmail">Unregister your E-mail</h1>
+        <h1 class="title" ng-if="!registeredEmail">Register your E-mail</h1>
       </div>
     </ion-header-bar>
     <ion-content>
-      <div class="item item-input-inset">
+      <div class="item item-input-inset" ng-if="!registeredEmail">
         <label class="item-input-wrapper">
-          <input id="emailField" type="text" placeholder="Email">
+          <input id="emailField" placeholder="Email" type="text">
         </label>
       </div>
+      <div class="item item-input-inset" ng-if="registeredEmail">
+      <h4>Are you sure you want to unsuscribe ?</h4>
+      </div>
+
     </ion-content>
-<div class="bar bar-footer bar-positive" ng-click="saveEmail()">>
-    <div class="bar bar-footer bar-positive" ng-click="closeeEmailModal()">
-      <div class="title">Submit</div>
+    <div class="tabs" ng-if="!registeredEmail">
+      <a class="tab-item balanced" ng-click="saveEmail('confirm')">
+        Register
+      </a>
+      <a class="tab-item assertive"  ng-click="saveEmail('abort')">
+        Cancel
+      </a>
+    </div>
+    <div class="tabs" ng-if="registeredEmail">
+      <a class="tab-item balanced" ng-click="deleteEmail('confirm')">
+        Unsubscribe
+      </a>
+      <a class="tab-item assertive"  ng-click="deleteEmail('abort')">
+        Cancel
+      </a>
     </div>
   </ion-modal-view>
 </script>
