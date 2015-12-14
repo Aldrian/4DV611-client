@@ -5,5 +5,4 @@ angular.module('apdClient', [
   'LocalStorageModule',
   'base64',
   'ionic',
-  'ionic-material'
 ]);

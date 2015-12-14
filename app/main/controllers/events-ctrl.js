@@ -8,7 +8,7 @@
  */
 'use strict';
 angular.module('main')
-  .controller('EventsCtrl', function($log, $scope, EventFetching, $ionicLoading, localStorageService, ionicMaterialMotion) {
+  .controller('EventsCtrl', function($log, $scope, EventFetching, $ionicLoading, localStorageService) {
     var storedRacetracks = localStorageService.get('racetracks');
 
     var selectedRacetrack = function(racetrack) {
@@ -37,9 +37,6 @@ angular.module('main')
         $log.log(data);
         $scope.events = data.filter(selectedRacetrack);
         $scope.eventCount = $scope.events.length;
-        setTimeout(function () {
-          ionicMaterialMotion.blinds();
-        }, 100);
       }).finally(function() {
        // Stop the ion-refresher from spinning
        $scope.$broadcast('scroll.refreshComplete');
@@ -55,9 +52,6 @@ angular.module('main')
       $scope.eventCount = $scope.events.length;
       //Hide loader
       $ionicLoading.hide();
-      setTimeout(function () {
-        ionicMaterialMotion.blinds();
-      }, 100);
     });
 
     $scope.getOfferImageAddress = function(endpoint) {
