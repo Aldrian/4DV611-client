@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-  .controller('WelcomeCtrl', function($log, $scope, EventFetching, localStorageService, $state) {
+  .controller('WelcomeCtrl', function($log, $scope, EventFetching, localStorageService, $state, $cordovaDevice) {
 
     EventFetching.getRacetracks().then(function(data) {
       $scope.racetracks = data;
@@ -25,10 +25,19 @@ angular.module('main')
       //Record the choices in the Local storage and set selectedRacetracks to true
       localStorageService.set('racetracks', selectedRacetracks);
       // Send taglist to OneSignal
-      $log.log(tagList);
-      if (localStorageService.get('uuid')) {
+      if (window.cordova) {
         // We are on mobile and deviceid is registered, so we can send the tags
         window.plugins.OneSignal.sendTags(tagList);
+      }
+      //Check of still registered
+      if (!localStorageService.get('uuid')) {
+        var uuid;
+        if (window.cordova) {
+          uuid = $cordovaDevice.getUUID();
+        } else {
+          uuid = 'chromedebug';
+        }
+        localStorageService.set('uuid', uuid);
       }
       //Move on
       $state.go('main.events');

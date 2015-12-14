@@ -14,7 +14,7 @@
     </div>
 
     <ion-checkbox id="{{racetrack.id}}"  ng-repeat="(i, racetrack) in racetracks | orderBy:'name'" type="checkbox">
-      {{ racetrack.name }}
+      {{::racetrack.name }}
     </ion-checkbox>
   </ion-content>
   <div class="bar bar-footer bar-balanced" ng-click="saveRacetracks()">

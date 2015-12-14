@@ -4,7 +4,7 @@
  */
 'use strict';
 angular.module('main')
-  .service('EventFetching', function($log, Config, $http) {
+  .service('EventFetching', function($log, Config, $http, localStorageService) {
 
     var apiHost = Config.ENV.SERVER_URL;
 
@@ -36,16 +36,27 @@ angular.module('main')
     }
 
     function getRacetracks() {
+      var unregistered;
+      if(!localStorageService.get('uuid')) {
+        localStorageService.set('uuid', 'chromedebug');
+        unregistered = true;
+      }
 
       return $http.get(apiHost + 'tracks')
         .then(getRacetracksComplete)
         .catch(getRacetracksFailed);
 
       function getRacetracksComplete(response) {
+        if (unregistered) {
+          localStorageService.remove('uuid');
+        }
         return response.data; // Promise for the recieved data, not the real data
       }
 
       function getRacetracksFailed(error) {
+        if (unregistered) {
+          localStorageService.remove('uuid');
+        }
         $log.error('XHR Failed for getEvents.\n' + angular.toJson(error.data, true));
       }
     }

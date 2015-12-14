@@ -63,9 +63,11 @@ angular.module('main')
       });
       if (selectedRacetracks === []) {
         //TODO :: Display an error message if nothing is selected
+        $log.log('Nothing is selected !');
         return false;
       }
       //Record the choices in the Local storage and set selectedRacetracks to true
+      $log.log(selectedRacetracks);
       localStorageService.set('racetracks', selectedRacetracks);
       if (window.cordova) {
         // Running on device

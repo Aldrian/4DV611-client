@@ -50,18 +50,17 @@ angular.module('main')
       }
     }
 
-
     function addEmail(deviceId, email) {
 
       var user = {
 
-          email: email,
-          username: null,
-          password: null,
-          deviceId: deviceId,
-          role: 2,
-          trackId: null,
-          enabled: true
+        email: email,
+        username: null,
+        password: null,
+        deviceId: deviceId,
+        role: 2,
+        trackId: null,
+        enabled: true
       };
 
       var req = {

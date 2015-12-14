@@ -4,7 +4,9 @@ angular.module('main', [
     'ngCordova',
     'ui.router',
   ])
-  .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+  .config(function($stateProvider, $urlRouterProvider, $httpProvider, $ionicConfigProvider) {
+    $ionicConfigProvider.scrolling.jsScrolling(false);
+    $ionicConfigProvider.views.maxCache(5);
     $httpProvider.interceptors.push('APIInterceptor');
     // ROUTING with ui.router
     $urlRouterProvider.otherwise('/events');
@@ -70,15 +72,6 @@ angular.module('main', [
 
 function runBlock($log, $window, Config, localStorageService, AccountManagement, $cordovaDevice, $location) {
 
-  /**************************
-  Check for racetrack selection
-  **************************/
-  if (!localStorageService.get('registered')) {
-    //Block the execution and display the racetrack selection template
-    $location.path('/welcome');
-  } else {
-    $log.log('Racetracks already registered, moving on');
-  }
 
   /**************************
   Check for device id
@@ -86,6 +79,7 @@ function runBlock($log, $window, Config, localStorageService, AccountManagement,
   var init = function() {
     $log.log('initializing device');
     if (!localStorageService.get('uuid')) {
+      //Register the device
       var uuid = null;
       if (window.cordova) {
         uuid = $cordovaDevice.getUUID();
@@ -100,13 +94,37 @@ function runBlock($log, $window, Config, localStorageService, AccountManagement,
           //Set the registered key in the localstorage to true
           localStorageService.set('uuid', uuid);
           $log.log('User registered');
+          doTheRest();
         } else {
           // TODO : Maybe block the app if the user is not properly registered
           $log.log('Something happened');
         }
       });
     } else {
-      $log.log('DeviceID '+ localStorageService.get('uuid') + ' already registered');
+      $log.log('DeviceID ' + localStorageService.get('uuid') + ' already registered');
+      doTheRest();
+    }
+
+    function doTheRest() {
+
+      if (window.cordova) {
+        /**************************
+        One Signal config
+        **************************/
+        var notificationOpenedCallback = function(jsonData) {
+          $log.log('didReceiveRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
+        };
+
+        $window.plugins.OneSignal.init(Config.ENV.ONESIGNAL_APP_ID, {
+            googleProjectNumber: Config.ENV.GOOGLE_PROJECT_NUMBER
+          },
+          notificationOpenedCallback);
+
+        // Show an alert box if a notification comes in when the user is in your app.
+        $window.plugins.OneSignal.enableInAppAlertNotification(true);
+      } else {
+        // running in dev mode
+      }
     }
   };
 
@@ -114,25 +132,14 @@ function runBlock($log, $window, Config, localStorageService, AccountManagement,
     init();
   });
 
-
-  if (window.cordova) {
-    /**************************
-    One Signal config
-    **************************/
-
-    var notificationOpenedCallback = function(jsonData) {
-      $log.log('didReceiveRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
-    };
-
-    $window.plugins.OneSignal.init(Config.ENV.ONESIGNAL_APP_ID, {
-        googleProjectNumber: Config.ENV.GOOGLE_PROJECT_NUMBER
-      },
-      notificationOpenedCallback);
-
-    // Show an alert box if a notification comes in when the user is in your app.
-    $window.plugins.OneSignal.enableInAppAlertNotification(true);
+  /**************************
+  Check for racetrack selection
+  **************************/
+  if (!localStorageService.get('racetracks')) {
+    //Block the execution and display the racetrack selection template
+    $location.path('/welcome');
   } else {
-    // running in dev mode
+    $log.log('Racetracks already registered, moving on');
   }
 
   $log.debug('runBlock end');

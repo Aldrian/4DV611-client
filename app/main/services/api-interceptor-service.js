@@ -4,10 +4,12 @@ angular.module('main')
     var service = this;
 
     service.request = function(config) {
-      var uuid = localStorageService.get('uuid');
-      var accessToken =  'Basic '+ $base64.encode(uuid+ ':' +uuid);
-      if (accessToken) {
-        config.headers.Authorization = accessToken;
+      if (config.method!=='POST') {
+        var uuid = localStorageService.get('uuid');
+        var accessToken =  'Basic '+ $base64.encode(uuid+ ':' +uuid);
+        if (accessToken) {
+          config.headers.Authorization = accessToken;
+        }
       }
       return config;
     };

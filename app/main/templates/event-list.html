@@ -1,12 +1,11 @@
 <ion-view view-title="Race events">
   <ion-content>
+    <ion-refresher on-refresh="doRefresh()" pulling-text="Pull to refresh..."></ion-refresher>
     <div class="eventlist">
-      <ion-refresher on-refresh="doRefresh()" pulling-text="Pull to refresh..."></ion-refresher>
-
       <ion-list class="animate-blinds">
-        <ion-item class="item card" ng-repeat="event in events" ui-sref="main.eventDetail({event:event})">
-          <h2>{{event.track.name}}</h2>
-          <p>{{event.date | date:'medium'}}</p>
+        <ion-item class="item card" ng-repeat="event in events track by event.id" ui-sref="main.eventDetail({event:event})">
+          <h2>{{::event.track.name}}</h2>
+          <p>{{::event.date | date:'medium'}}</p>
         </ion-item>
       </ion-list>
     </div>

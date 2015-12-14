@@ -8,17 +8,17 @@
 
     <div class="content double-padding">
       <h4 class="positive">About
-        {{event.name}}</h4>
+        {{::event.name}}</h4>
       <p class="text-muted">
-        {{event.track.about}}
+        {{::event.track.about}}
       </p>
       <p class="text-muted">
-        {{event.track.address}}
+        {{::event.track.address}}
       </p>
       <p class="text-muted">
         Home team :
         <br>
-        {{event.homeTeam}}
+        {{::event.homeTeam}}
       </p>
     </div>
 
@@ -27,7 +27,7 @@
       <div class="content">
         <div class="avatar" style="background-image: url({{event.offerImage}});"></div>
         <h3>
-          {{event.offer}}
+          {{::event.offer}}
         </h3>
         <h4>{{event.offer.description}}</h4>
       </div>
@@ -37,21 +37,21 @@
       <h3>Race list</h3>
     </div>
 
-    <div class="card" ng-repeat="race in event.raceList" ui-sref="main.raceDetail({race:race})">
+    <div class="card" ng-repeat="race in event.raceList track by race.id" ui-sref="main.raceDetail({race:race})">
       <div class="item item-text-wrap stable-bg waves-effect waves-block">
         <p>
-          <strong>#{{race.number}}</strong>
+          <strong>#{{::race.number}}</strong>
           <br>
-          {{race.horseCount}}
+          {{::race.horseCount}}
           horses.
         </p>
         <p class="text-muted">
-          {{race.information}}
+          {{::race.information}}
         </p>
         <div class="card-footer text-right">
           <div class="pull-left">
             <i class="icon ion-clock"></i>
-            {{race.startTime | date: 'medium'}}
+            {{::race.startTime | date: 'medium'}}
           </div>
         </div>
       </div>
