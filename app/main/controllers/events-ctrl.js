@@ -8,8 +8,10 @@
  */
 'use strict';
 angular.module('main')
-  .controller('EventsCtrl', function($log, $scope, EventFetching, $ionicLoading, localStorageService) {
+  .controller('EventsCtrl', function($log, $scope, EventFetching, $ionicLoading, localStorageService, $rootScope) {
+    $rootScope.viewName = 'events';
     var storedRacetracks = localStorageService.get('racetracks');
+
 
     var selectedRacetrack = function(racetrack) {
       if (storedRacetracks.indexOf(racetrack.track.id) === -1) {
@@ -19,10 +21,9 @@ angular.module('main')
       }
     };
 
-
     // Setup the loader
     $ionicLoading.show({
-      template: '<div class="loader"><svg class="circular"><circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10"/></svg></div>',
+      template: '<div class="loader"></div>',
       content: 'Loading',
       showBackdrop: false,
       maxWidth: 200,
@@ -54,6 +55,8 @@ angular.module('main')
       $ionicLoading.hide();
     });
 
+    $scope.events = [];
+    $ionicLoading.hide();
     $scope.getOfferImageAddress = function(endpoint) {
       return EventFetching.apiHost + endpoint;
     };

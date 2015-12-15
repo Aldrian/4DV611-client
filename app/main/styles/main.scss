@@ -4,20 +4,110 @@ in ionic's _variables.scss file.
 
 For example, you might change some of the default colors:
 */
-$light:                           #fff !default;
-$stable:                          #f8f8f8 !default;
-$positive:                        #387ef5 !default;
-$calm:                            lighten($positive, 10%) !default;
-$balanced:                        #33cd5f !default;
-$energized:                       #ffc900 !default;
-$assertive:                       #ef473a !default;
-$royal:                           #886aea !default;
-$dark:                            #444 !default;
+$light: #fff !default;
+$stable: #f8f8f8 !default;
+$positive: #FF9400 !default; //accent color
+$calm: lighten($positive, 10%) !default;
+$balanced: #14bf82 !default;
+$energized: #ffc900 !default;
+$assertive: #bf1451 !default;
+$royal: #886aea !default;
+$dark: #444 !default;
+
 // The path for our ionicons font files, relative to the built & temporary main.css
 $ionicons-font-path: "../assets/fonts" !default;
+
 // Include all of Ionic
 @import "../../bower_components/ionic/scss/ionic";
+
 // stylings
+$background: #203542;
+$accent: #FF9400;
+$background-lighter: #2D4C5F;
+$green: #A7D045;
+$white: #EEE;
+.bg-assertive {
+  background-color: $assertive;
+}
+.bg-balanced {
+  background-color: $balanced;
+}
+body,
+.pane {
+  background-color: $background;
+  font-family: 'Lato', sans-serif;
+}
+ion-header-bar,
+.bar {
+  background-color: transparent;
+  color: $white;
+  .title {
+    font-weight: 700;
+    text-align: center !important;
+    left: 0 !important;
+  }
+}
+.menu {
+  .bar {
+    background-color: transparent;
+  }
+  background-color: lighten($background, 2%);
+  .title {
+    font-weight: 700;
+    text-align: left !important;
+    padding-left: 10px;
+    left: inherit;
+  }
+  .item-content,
+  .item {
+    background-color: lighten($background, 3%) !important;
+    &.active {
+      background-color: $green;
+    }
+  }
+}
+.item {
+  border: none;
+  background-color: lighten($background, 1%);
+  color: darken($white, 10%);
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 8px;
+  font-family: 'Lato', sans-serif;
+  font-weight: 700;
+  &.item-icon-left {
+    span {
+      margin-left: 15px;
+    }
+  }
+  h2 {
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    color: white;
+    font-size: 18px;
+  }
+  p {
+    font-family: 'Lato';
+    color: $white;
+    font-weight: 500;
+    font-size: 16px;
+  }
+  span {
+    font-family: 'Lato';
+    color: #ddd;
+    font-weight: 500;
+    font-size: 14px;
+  }
+}
+ion-side-menu {
+  .item {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+}
+.item-content {
+  background-color: lighten($background, 1%) !important;
+}
 .eventlist {
   .card {
     .item-content {
@@ -29,20 +119,393 @@ $ionicons-font-path: "../assets/fonts" !default;
     }
   }
 }
-
-.loading-container .loading{
+.loading-container .loading {
   background-color: transparent;
 }
-
 .tab-item {
   &.assertive {
     background-color: $assertive;
     color: white;
     max-width: inherit;
   }
-  &.balanced{
+  &.balanced {
     background-color: $balanced;
     color: white;
     max-width: inherit;
+  }
+}
+.event-details {
+  .header {
+    background-image: url(http://cdn3.livelongandtravel.com/Horse-Racing.jpg);
+    background-size: cover;
+    position: relative;
+    padding-top: 100px;
+    padding-bottom: 40px;
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: $background;
+      opacity: 0.8;
+      z-index: 2;
+    }
+    h1 {
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      color: white;
+      font-size: 20px;
+      text-align: center;
+      margin: 0;
+      position: absolute;
+      top: 75%;
+      left: 50%;
+      transform: translate(-50%, -75%);
+      z-index: 4;
+    }
+  }
+  .sub-header {
+    background-color: darken($background, 2%);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    span,
+    i {
+      font-family: 'Lato', sans-serif;
+      font-weight: 500;
+      color: #dddddd;
+      font-size: 18px;
+      text-align: left;
+    }
+    span {
+      padding-left: 15px;
+    }
+    i {
+      padding-left: 40px;
+    }
+  }
+  .highlight {
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    color: $white;
+    font-size: 18px;
+    text-align: center;
+    margin-left: 40px;
+    margin-right: 40px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid lighten($background, 5%);
+  }
+  .section-title {
+    background-color: darken($background, 2%);
+    h2 {
+      font-family: 'Lato', sans-serif;
+      font-weight: 500;
+      text-transform: uppercase;
+      color: #aaa;
+      font-size: 18px;
+      text-align: left;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      padding-left: 40px;
+      margin: 0;
+    }
+  }
+  .section-content {
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    color: $white;
+    font-size: 16px;
+    text-align: left;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 40px;
+    margin: 0;
+    img {
+      max-width: 100%;
+    }
+  }
+  .offer {
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    color: $white;
+    font-size: 16px;
+    text-align: left;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 0;
+    margin: 0;
+    .col-75 {
+      padding-left: 20px;
+    }
+    img {
+      max-width: 100%;
+    }
+  }
+  .race {
+    .right {
+      float: right;
+    }
+    .left {
+      float: left;
+    }
+    strong {
+      color: #fff;
+      font-size: 16px;
+    }
+    .race-header {
+      margin-bottom: 15px;
+    }
+    .footer {
+      margin-top: 15px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 500;
+      color: #ddd;
+    }
+  }
+}
+.settings-items {
+  .item {
+    height: 70px;
+    p {
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      position: absolute;
+      top: 0;
+      height: 100%;
+    }
+  }
+}
+.racetrack-select {
+  &.modal {
+    background-color: $background;
+  }
+  .title {
+    color: $white;
+    font-family: 'Lato', sans-serif;
+    font-weight: 700;
+    text-align: center !important;
+    left: 0 !important;
+  }
+  input[type='checkbox'] {
+    height: 0;
+    width: 0;
+  }
+  .track {
+    margin-left: 40px;
+  }
+  input[type='checkbox'] + label {
+    position: relative;
+    display: flex;
+    margin: 12px 0;
+    align-items: center;
+    color: #eee;
+    transition: color 250ms cubic-bezier(.4,.0,.23,1);
+  }
+  input[type='checkbox'] + label > ins {
+    position: absolute;
+    display: block;
+    bottom: 0;
+    left: 40px;
+    height: 0;
+    width: 100%;
+    overflow: hidden;
+    text-decoration: none;
+    transition: height 300ms cubic-bezier(.4,.0,.23,1);
+  }
+  input[type='checkbox'] + label > ins > i {
+    position: absolute;
+    bottom: 0;
+    font-style: normal;
+    color: $accent;
+  }
+  input[type='checkbox'] + label > span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 20px;
+    width: 20px;
+    height: 20px;
+    background: transparent;
+    border: 2px solid #eee;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: all 250ms cubic-bezier(.4,.0,.23,1);
+  }
+  input[type='checkbox'] + label:hover,
+  input[type='checkbox']:focus + label {
+    color: #fff;
+  }
+  input[type='checkbox'] + label:hover > span,
+  input[type='checkbox']:focus + label > span {
+    background: rgba(255,255,255,.1);
+  }
+  input[type='checkbox']:checked + label > ins {
+    height: 100%;
+  }
+  input[type='checkbox']:checked + label > span {
+    border: 10px solid $accent;
+    animation: shrink-bounce 200ms cubic-bezier(.4,.0,.23,1);
+  }
+  input[type='checkbox']:checked + label > span:before {
+    content: "";
+    position: absolute;
+    top: 12px;
+    left: 4px;
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    transform: rotate(45deg);
+    transform-origin: 0 100%;
+    animation: checkbox-check 125ms 250ms cubic-bezier(.4,.0,.23,1) forwards;
+  }
+  @keyframes shrink-bounce {
+    0% {
+      transform: scale(1);
+    }
+    33% {
+      transform: scale(.85);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  @keyframes checkbox-check {
+    0% {
+      width: 0;
+      height: 0;
+      border-color: #fff;
+      transform: translate3d(0,0,0) rotate(45deg);
+    }
+    33% {
+      width: 4px;
+      height: 0;
+      transform: translate3d(0,0,0) rotate(45deg);
+    }
+    100% {
+      width: 4px;
+      height: 10px;
+      border-color: #fff;
+      transform: translate3d(0,-10px,0) rotate(45deg);
+    }
+  }
+  .tabs {
+    padding-top: 0;
+    height: 70px;
+    line-height: 70px;
+    background: none;
+  }
+  .tab-item {
+    font-family: 'Lato', sans-serif;
+    font-size: 19px;
+    color: white;
+    font-weight: 700;
+    text-align: center !important;
+    opacity: 1;
+    .icon {
+      font-size: 19px;
+    }
+  }
+  .bar-footer {
+    line-height: 70px;
+    height: 70px;
+    font-family: 'Lato', sans-serif;
+    font-size: 19px;
+    color: white;
+    font-weight: 700;
+    .title {
+      line-height: 70px;
+    }
+  }
+  .error {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 0;
+    background-color: $assertive;
+    z-index: 10;
+    font-family: 'Lato', sans-serif;
+    font-size: 19px;
+    color: white;
+    font-weight: 700;
+    line-height: 70px;
+    .title {
+      line-height: 70px;
+    }
+    &.active {
+      animation: grow 3s ease forwards;
+    }
+  }
+  @keyframes grow {
+    0% {
+      height: 0;
+    }
+    20% {
+      height: 70px;
+    }
+    80% {
+      height: 70px;
+    }
+    100% {
+      height: 0;
+    }
+  }
+  .email-input {
+    .email-description {
+      h3 {
+        font-family: 'Lato', sans-serif;
+        font-size: 18px;
+        color: #ddd;
+        font-weight: 500;
+      }
+      margin-top: 30px;
+      padding-left: 20px;
+      padding-right: 20px;
+      text-align: justify;
+    }
+    p.input-container {
+      width: 100%;
+      position: relative;
+      top: 50px;
+      margin-bottom: 25px;
+      background: lighten($background, 2%);
+      height: 70px;
+    }
+    label {
+      font-family: 'Lato', sans-serif;
+      font-size: 18px;
+      color: #ddd;
+      font-weight: 700;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      line-height: 70px;
+      cursor: text;
+      transition: transform 0.3s ease;
+      left: 0;
+      padding-left: 40px;
+    }
+    input {
+      width: 100%;
+      height: 40px;
+      font-family: 'Lato', sans-serif;
+      font-size: 18px;
+      color: white;
+      font-weight: 700;
+      transition: 0.6s;
+      transform: translateY(15px);
+      border: none;
+      background-color: transparent;
+      padding-left: 40px;
+      &:focus {
+        outline: none;
+      }
+    }
+
+    //Input Animation Styles
+    .animation label {
+      transform: translateY(-55px);
+      font-size: 16px;
+    }
   }
 }

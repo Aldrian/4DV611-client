@@ -1,37 +1,51 @@
-<ion-view view-title="Config view">
-  <ion-content class="padding">
+<ion-view view-title="Settings">
+  <ion-content>
 
     <!-- content goes here -->
     <ion-list>
-      <ion-item class="item item-icon-left">
-        <i class="icon ion-ios-toggle"></i>
-        <span ng-click="openRacetracksModal()">Select your racetracks</span>
-      </ion-item>
-      <ion-item class="item item-icon-left">
-        <i class="icon ion-email"></i>
-        <span ng-if="registeredEmail" ng-click="openEmailModal()">
-          Unregister Your E-mail
-        </span>
-        <span ng-if="!registeredEmail" ng-click="openEmailModal()">
-          Register Your E-mail
-        </span>
-      </ion-item>
+      <div class="settings-items">
+        <ion-item class="item item-icon-left item-icon-right">
+          <i class="icon ion-ios-toggle"></i>
+          <p ng-click="openRacetracksModal()">Select your racetracks</p>
+          <i class="icon ion-ios-arrow-right"></i>
+        </ion-item>
+        <ion-item class="item item-icon-left item-icon-right">
+          <i class="icon ion-email"></i>
+          <p ng-click="openEmailModal()" ng-if="registeredEmail">
+            Unregister Your E-mail
+          </p>
+          <p ng-click="openEmailModal()" ng-if="!registeredEmail">
+            Register Your E-mail
+          </p>
+          <i class="icon ion-ios-arrow-right"></i>
+        </ion-item>
+      </div>
     </ion-list>
   </ion-content>
 </ion-view>
 
 <script id="my-modal.html" type="text/ng-template">
-  <ion-modal-view>
-    <ion-header-bar>
+  <ion-modal-view class="racetrack-select">
+    <ion-header-bar class="bar">
       <h1 class="title">Select your tracks</h1>
     </ion-header-bar>
     <ion-content>
-      <ion-checkbox id="{{::racetrack.id}}" ng-checked="isChecked(racetrack.id)" ng-repeat="racetrack in racetracks | orderBy:'name'" type="checkbox">
-        {{::racetrack.name}}
-      </ion-checkbox>
+      <div class="track" ng-checked="isChecked(racetrack.id)" ng-repeat="racetrack in racetracks | orderBy:'name'">
+        <input id='{{::racetrack.id}}' ng-checked="isChecked(racetrack.id)" type='checkbox'/>
+        <label for='{{::racetrack.id}}'>
+          <span></span>
+          {{::racetrack.name}}
+          <ins>
+            <i>{{::racetrack.name}}</i>
+          </ins>
+        </label>
+      </div>
     </ion-content>
-    <div class="bar bar-footer bar-positive" ng-click="saveRacetracks()">
-      <div class="title">Done !</div>
+    <div class="bar bar-footer bar-balanced" ng-click="saveRacetracks()">
+      <i class="title icon ion-checkmark"></i>
+    </div>
+    <div class="error">
+      <div class="title">Please select at least one :(</div>
     </div>
 
   </ion-modal-view>
@@ -39,40 +53,51 @@
 
 <!--Email Modal for User Email registartion-->
 <script id="my-email-modal.html" type="text/ng-template">
-  <ion-modal-view>
+  <ion-modal-view class="racetrack-select">
     <ion-header-bar>
-      <div class="bar bar-header bar-positive">
-        <div class="title"></div>
+      <div class="bar">
         <h1 class="title" ng-if="registeredEmail">Unregister your E-mail</h1>
         <h1 class="title" ng-if="!registeredEmail">Register your E-mail</h1>
       </div>
     </ion-header-bar>
     <ion-content>
-      <div class="item item-input-inset" ng-if="!registeredEmail">
-        <label class="item-input-wrapper">
-          <input id="emailField" placeholder="Email" type="text">
-        </label>
+      <div class="email-input" ng-if="!registeredEmail">
+        <div class="email-description">
+          <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h3>
+        </div>
+        <p class="input-container">
+          <input class="email-input" id="input-email" type="email">
+          <label for="input-email" unselectable="on">Email address</label>
+        </p>
       </div>
-      <div class="item item-input-inset" ng-if="registeredEmail">
-      <h4>Are you sure you want to unsuscribe ?</h4>
+
+      <div class="email-input" ng-if="registeredEmail">
+        <div class="email-description">
+          <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h3>
+          <br>
+          <h3>So.. Are you sure you want to unsubscribe ?</h3>
+        </div>
       </div>
 
     </ion-content>
     <div class="tabs" ng-if="!registeredEmail">
-      <a class="tab-item balanced" ng-click="saveEmail('confirm')">
-        Register
+      <a class="tab-item balanced title" ng-click="saveEmail('confirm')">
+        <i class="icon ion-checkmark"></i>
       </a>
-      <a class="tab-item assertive"  ng-click="saveEmail('abort')">
-        Cancel
+      <a class="tab-item assertive title" ng-click="saveEmail('abort')">
+        <i class="icon ion-close"></i>
       </a>
     </div>
     <div class="tabs" ng-if="registeredEmail">
-      <a class="tab-item balanced" ng-click="deleteEmail('confirm')">
-        Unsubscribe
+      <a class="tab-item balanced title" ng-click="deleteEmail('confirm')">
+        <i class="icon ion-checkmark"></i>
       </a>
-      <a class="tab-item assertive"  ng-click="deleteEmail('abort')">
-        Cancel
+      <a class="tab-item assertive title" ng-click="deleteEmail('abort')">
+        <i class="icon ion-close"></i>
       </a>
+    </div>
+    <div class="error">
+      <div class="title">Please enter a valid email :(</div>
     </div>
   </ion-modal-view>
 </script>

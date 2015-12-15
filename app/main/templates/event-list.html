@@ -3,13 +3,14 @@
     <ion-refresher on-refresh="doRefresh()" pulling-text="Pull to refresh..."></ion-refresher>
     <div class="eventlist">
       <ion-list class="animate-blinds">
-        <ion-item class="item card" ng-repeat="event in events track by event.id" ui-sref="main.eventDetail({event:event})">
-          <h2>{{::event.track.name}}</h2>
-          <p>{{::event.date | date:'medium'}}</p>
+        <ion-item class="item" ng-repeat="event in events track by event.id" ui-sref="main.eventDetail({event:event})">
+          <h2>In {{::event.track.name}}</h2>
+          <p>
+            {{::event.highlight}}
+          </p>
+          <span am-time-ago="event.date"></span>
         </ion-item>
       </ion-list>
     </div>
-
   </ion-content>
-
 </ion-view>

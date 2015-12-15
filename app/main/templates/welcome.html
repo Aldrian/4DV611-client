@@ -13,12 +13,22 @@
       </p>
     </div>
 
-    <ion-checkbox id="{{racetrack.id}}"  ng-repeat="(i, racetrack) in racetracks | orderBy:'name'" type="checkbox">
-      {{::racetrack.name }}
-    </ion-checkbox>
-  </ion-content>
-  <div class="bar bar-footer bar-balanced" ng-click="saveRacetracks()">
-    <div class="title">Done !</div>
-  </div>
+      <div class="track" ng-checked="isChecked(racetrack.id)" ng-repeat="racetrack in racetracks | orderBy:'name'">
+        <input id='{{::racetrack.id}}' ng-checked="isChecked(racetrack.id)" type='checkbox'/>
+        <label for='{{::racetrack.id}}'>
+          <span></span>
+          {{::racetrack.name}}
+          <ins>
+            <i>{{::racetrack.name}}</i>
+          </ins>
+        </label>
+      </div>
+    </ion-content>
+    <div class="bar bar-footer bar-balanced" ng-click="saveRacetracks()">
+      <i class="title icon ion-checkmark"></i>
+    </div>
+    <div class="error">
+      <div class="title">Please select at least one :(</div>
+    </div>
 
 </ion-modal-view>

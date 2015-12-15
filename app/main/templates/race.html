@@ -1,62 +1,68 @@
-<ion-view view-title="Race">
+<ion-view view-title="Race details">
 
   <ion-content>
-    <div class="mid-bar dark-bg z1 padding">
-      <h3>{{::race.startTime | date: 'medium'}}</h3>
-      <p>{{::race.information}}</p>
-    </div>
-
-    <div class="content double-padding">
-      <h4 class="positive">Race number
-        {{::race.number}}</h4>
-      <p class="text-muted">
-        {{::race.shortInformations}}
-      </p>
-    </div>
-
-    <div class="content double-padding">
-      <h4 class="positive">Reserv Order</h4>
-      <p class="text-muted">
-        {{::race.reservOrder}}
-      </p>
-    </div>
-    <div class="content double-padding">
-      <h4 class="positive">Short Informations</h4>
-      <p class="text-muted">
-        {{::race.shortInformation}}
-      </p>
-    </div>
-
-    <div class="mid-bar calm-bg z1 padding">
-      <h3>Horses running</h3>
-    </div>
-
-    <div class="card" ng-repeat="horse in race.startList track by horse.id" ui-sref="main.raceDetail({race:race})">
-      <div class="item item-text-wrap stable-bg waves-effect waves-block">
-        <p>
-          <strong>{{horse.horse}}</strong>
-          <br>
-          Driver :
-          {{::horse.driver}}
-        </p>
-        <p class="text-muted">
-          Trainer :
-          {{::horse.trainer}}
-        </p>
-        <div class="card-footer text-right">
-          <i ng-if="horse.sex == 'S'" class="icon ion-female assertive"></i>
-          <i ng-if="horse.sex == 'V' || horse.sex == 'H'" class="icon ion-male positive"></i>
-          <i class="icon ion-pound dark"></i>
-          {{::horse.startNumber}}
-          <div class="pull-left">
-            <i class="ion-ribbon-b"></i>
-            {{::horse.totalWinnings}}
-          </div>
-        </div>
+    <div class="event-details">
+      <div class="header">
+        <div class="overlay"></div>
+        <h1>Race number
+          {{race.number}}</h1>
       </div>
-    </div>
+      <div class="sub-header">
+        <span style="padding-left: 40px;">{{race.startTime | amDateFormat:'dddd, MMMM Do, h:mm a'}}</span>
+        <br>
+        <i class="ion-android-time"></i>
+        <span am-time-ago="race.startTime"></span>
+      </div>
 
+      <div class="highlight">
+        {{::race.information}}
+      </div>
 
-  </ion-content>
+      <div class="section-title">
+        <h2>Short informations</h2>
+      </div>
+      <div class="section-content">
+        {{::race.shortInformations}}
+      </div>
+      <div class="section-title">
+        <h2>Reserv. Order</h2>
+      </div>
+      <div class="section-content">
+        {{::race.reservOrder}}
+      </div>
+      <div class="section-title">
+        <h2>Horses running</h2>
+      </div>
 
-</ion-view>
+      <ion-list class="animate-blinds">
+        <ion-item class="item race" ng-repeat="horse in race.startList track by horse.id">
+          <div class="race-header">
+            <strong class="left">{{horse.horse}}</strong>
+            <strong class="right">
+              <i class="icon ion-pound"></i>
+              &nbsp;{{::horse.startNumber}}</strong>
+          </div>
+
+          <br>
+          <p>
+            Driver :
+            {{::horse.driver}}
+            <br>
+            Trainer :
+            {{::horse.trainer}}
+          </p>
+          <div class="footer ">
+            <div class="left">
+              <i class="ion-ribbon-b"></i>
+              &nbsp;
+              {{::horse.totalWinnings}}
+            </div>
+            <div class="right">
+              <i class="icon ion-female assertive" ng-if="horse.sex == 'S'"></i>
+              <i class="icon ion-male positive" ng-if="horse.sex == 'V' || horse.sex == 'H'"></i>
+            </div>
+          </div>
+        </ion-item>
+      </ion-list>
+
+    </ion-view>

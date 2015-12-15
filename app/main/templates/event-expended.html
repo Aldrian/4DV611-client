@@ -1,62 +1,76 @@
-<ion-view view-title="Event">
+<ion-view view-title="Event details">
 
   <ion-content>
-    <div class="mid-bar dark-bg z1 padding">
-      <h3>{{event.track.name}}</h3>
-      <p>{{event.date | date:'medium'}}</p>
-    </div>
-
-    <div class="content double-padding">
-      <h4 class="positive">About
-        {{::event.name}}</h4>
-      <p class="text-muted">
-        {{::event.track.about}}
-      </p>
-      <p class="text-muted">
-        {{::event.track.address}}
-      </p>
-      <p class="text-muted">
-        Home team :
-        <br>
-        {{::event.homeTeam}}
-      </p>
-    </div>
-
-
-    <div class="hero has-mask">
-      <div class="content">
-        <div class="avatar" style="background-image: url({{event.offerImage}});"></div>
-        <h3>
-          {{::event.offer}}
-        </h3>
-        <h4>{{event.offer.description}}</h4>
+    <div class="event-details">
+      <div class="header">
+        <div class="overlay"></div>
+        <h1>{{event.track.name}}</h1>
       </div>
-    </div>
 
-    <div class="mid-bar calm-bg z1 padding">
-      <h3>Race list</h3>
-    </div>
+      <div class="sub-header">
+        <i class="ion-android-time"></i>
+        <span am-time-ago="event.date"></span>
+      </div>
 
-    <div class="card" ng-repeat="race in event.raceList track by race.id" ui-sref="main.raceDetail({race:race})">
-      <div class="item item-text-wrap stable-bg waves-effect waves-block">
-        <p>
-          <strong>#{{::race.number}}</strong>
-          <br>
-          {{::race.horseCount}}
-          horses.
-        </p>
-        <p class="text-muted">
-          {{::race.information}}
-        </p>
-        <div class="card-footer text-right">
-          <div class="pull-left">
-            <i class="icon ion-clock"></i>
-            {{::race.startTime | date: 'medium'}}
-          </div>
+      <div class="highlight">
+        {{event.highlight}}
+      </div>
+
+      <div class="section-title">
+        <h2>Home team</h2>
+      </div>
+
+      <div class="section-content">
+        {{::event.homeTeam}}
+      </div>
+
+      <div class="section-title">
+        <h2>About the track</h2>
+      </div>
+
+      <div class="section-content">
+        {{::event.track.about}}
+        {{::event.track.address}}
+      </div>
+
+      <div class="section-title">
+        <h2>Today's offer</h2>
+      </div>
+
+      <div class="offer">
+        <div class="row">
+          <div class="col"><img alt="offer image" ng-src="{{event.offerImage}}"/></div>
+          <div class="col col-75">{{::event.offer}}</div>
         </div>
       </div>
-    </div>
 
+      <div class="section-title">
+        <h2>Races</h2>
+      </div>
+
+      <ion-list class="animate-blinds">
+        <ion-item class="item race" ng-repeat="race in event.raceList | orderBy: 'number'" ui-sref="main.raceDetail({race:race})">
+          <div class="race-header">
+            <strong>
+              <i class="icon ion-pound"></i> &nbsp; {{::race.number}}
+            </strong>
+          </div>
+          <p>
+            {{::race.shortInformation}}
+          </p>
+          <div class="footer ">
+            <div class="left">
+              <i class="icon ion-podium"></i>&nbsp; {{::race.horseCount}} horses
+            </div>
+            <div class="right">
+              <i class="ion-android-time"></i> &nbsp;
+              <span>{{race.startTime |  amDateFormat:'h:mm a'}}</span>
+            </div>
+          </div>
+        </ion-item>
+      </ion-list>
+
+    </div>
   </ion-content>
 
 </ion-view>
