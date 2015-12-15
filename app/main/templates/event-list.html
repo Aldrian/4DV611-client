@@ -1,6 +1,6 @@
 <ion-view view-title="Race events">
   <ion-content>
-    <ion-refresher on-refresh="doRefresh()" pulling-text="Pull to refresh..."></ion-refresher>
+    <ion-refresher on-refresh="doRefresh()" pulling-text="Pull to refresh..." spinner="ripple"></ion-refresher>
     <div class="eventlist">
       <ion-list class="animate-blinds">
         <ion-item class="item" ng-repeat="event in events track by event.id" ui-sref="main.eventDetail({event:event})">

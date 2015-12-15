@@ -509,3 +509,62 @@ ion-side-menu {
     }
   }
 }
+
+$orange: $accent;
+
+@keyframes pulse {
+  0%   { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+
+
+.ctnr {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: transparentize($background, 0.9);;
+  width: 100%;
+  height: 100%;
+}
+
+.ldr {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  margin: auto;
+  width: 2.5em;
+  height: 2.5em;
+}
+
+.ldr-blk {
+  height: 35%;
+  width: 35%;
+  animation: pulse 0.75s ease-in infinite alternate;
+  background-color: $orange;
+}
+
+.an_delay {
+  animation-delay: 0.75s;
+}
+
+.text-pulling {
+  color: $white !important;
+  font-family: 'Lato', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+}
+.icon-pulling {
+  .icon {
+    color: $white !important;
+  }
+}
+.spinner {
+  stroke: $white;
+  fill: $white;
+}

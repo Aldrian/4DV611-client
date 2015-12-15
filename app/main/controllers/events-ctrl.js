@@ -23,10 +23,10 @@ angular.module('main')
 
     // Setup the loader
     $ionicLoading.show({
-      template: '<div class="loader"></div>',
+      template: '<section class="ctnr"> <div class="ldr">  <div class="ldr-blk"></div>   <div class="ldr-blk an_delay"></div>  <div class="ldr-blk an_delay"></div>   <div class="ldr-blk"></div>  </div></section>',
       content: 'Loading',
       showBackdrop: false,
-      maxWidth: 200,
+      maxWidth: 400,
       showDelay: 0
     });
 
@@ -39,9 +39,9 @@ angular.module('main')
         $scope.events = data.filter(selectedRacetrack);
         $scope.eventCount = $scope.events.length;
       }).finally(function() {
-       // Stop the ion-refresher from spinning
-       $scope.$broadcast('scroll.refreshComplete');
-     });
+        // Stop the ion-refresher from spinning
+        $scope.$broadcast('scroll.refreshComplete');
+      });
     };
 
     var eventPromise = EventFetching.getEvents();
@@ -54,9 +54,6 @@ angular.module('main')
       //Hide loader
       $ionicLoading.hide();
     });
-
-    $scope.events = [];
-    $ionicLoading.hide();
     $scope.getOfferImageAddress = function(endpoint) {
       return EventFetching.apiHost + endpoint;
     };
