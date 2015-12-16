@@ -10,6 +10,11 @@
           </p>
           <span am-time-ago="event.date"></span>
         </ion-item>
+
+        <ion-item class="item" ng-if="events.length == 0">
+          <p>No events available for your subscription preferences</p>
+        </ion-item>
+
       </ion-list>
     </div>
   </ion-content>
