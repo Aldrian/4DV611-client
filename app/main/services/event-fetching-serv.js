@@ -15,7 +15,8 @@ angular.module('main')
     var service = {
       apiHost: apiHost,
       getEvents: getEvents,
-      getRacetracks: getRacetracks
+      getRacetracks: getRacetracks,
+      postSubscriptions: postSubscriptions
     };
 
     return service;
@@ -32,6 +33,36 @@ angular.module('main')
 
       function getEventsFailed(error) {
         $log.error('XHR Failed for getEvents.\n' + angular.toJson(error.data, true));
+      }
+    }
+
+    function postSubscriptions(tracklist) {
+
+      var object = {
+        deviceId: localStorageService.get('uuid'),
+        trackIdList: tracklist
+      };
+
+      var req = {
+        method: 'POST',
+        url: apiHost + 'subscriptions/',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        data: object
+      };
+
+
+      return $http(req).then(postSubscriptionsComplete)
+        .catch(postSubscriptionsFailed);
+
+      function postSubscriptionsComplete() {
+        return true; // Promise for the recieved data, not the real data
+      }
+
+      function postSubscriptionsFailed(error) {
+        $log.error('XHR Failed for createUser.\n' + angular.toJson(error.data, true));
+        return false;
       }
     }
 

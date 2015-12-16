@@ -29,6 +29,7 @@ angular.module('main')
       }
       //Record the choices in the Local storage and set selectedRacetracks to true
       localStorageService.set('racetracks', selectedRacetracks);
+      EventFetching.postSubscriptions(selectedRacetracks);
       // Send taglist to OneSignal
       if (window.cordova) {
         // We are on mobile and deviceid is registered, so we can send the tags

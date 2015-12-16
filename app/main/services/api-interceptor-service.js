@@ -1,17 +1,26 @@
 'use strict';
 angular.module('main')
-  .service('APIInterceptor', function($rootScope, localStorageService, $base64) {
+  .service('APIInterceptor', function($rootScope, localStorageService, $base64, $log, Config) {
     var service = this;
+    var apiHost = Config.ENV.SERVER_URL;
 
     service.request = function(config) {
-      if (config.method!=='POST') {
+      if (config.url === apiHost + 'subscriptions/') {
+        $log.log('Its a subscriptions request');
+        return addAuth();
+      }
+      if (config.method !== 'POST' && config.url !== apiHost + 'subscriptions/') {
+        return addAuth();
+      }
+
+      function addAuth() {
         var uuid = localStorageService.get('uuid');
-        var accessToken =  'Basic '+ $base64.encode(uuid+ ':' +uuid);
+        var accessToken = 'Basic ' + $base64.encode(uuid + ':' + uuid);
         if (accessToken) {
           config.headers.Authorization = accessToken;
         }
+        return config;
       }
-      return config;
     };
 
     service.responseError = function(response) {
@@ -20,4 +29,6 @@ angular.module('main')
       }
       return response;
     };
+
+
   });
