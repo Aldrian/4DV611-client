@@ -13,10 +13,16 @@ angular.module('main')
     $rootScope.viewName = 'events';
 
     $rootScope.$on('notificationOpened', function(event, data) {
-      $log.log('Event notificationOpened recieved : ' + data);
-      $state.go('main.eventDetail', {
-        event: data
+      $log.log('Event notificationOpened recieved');
+      //Fetch the right event according to the eventId
+      $scope.events.forEach(function(elem, key, array) {
+        if (elem.id.toString() === data.eventId) {
+          $state.go('main.eventDetail', {
+            event: array[key]
+          });
+        }
       });
+
     });
 
     // Setup the loader

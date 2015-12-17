@@ -100,11 +100,11 @@ function runBlock($log, $window, Config, localStorageService, AccountManagement,
   });
 
   var notificationOpenedCallback = function(jsonData) {
-    $log.log('notification recieved ! ');
-    if (jsonData.ArrayOfObjects !== undefined) {
-      $log.log(jsonData.ArrayOfObjects);
+    $log.log('notification opened!');
+    $log.log(jsonData.additionalData);
+    if (jsonData.additionalData !== undefined) {
       $rootScope.$broadcast('notificationOpened', {
-        event: 'jsonData.ArrayOfObjects'
+        eventId: jsonData.additionalData.eventId
       });
     }
 
