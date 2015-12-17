@@ -8,7 +8,7 @@
  */
 'use strict';
 angular.module('main')
-  .controller('EventsCtrl', function($log, $scope, EventFetching, $ionicLoading, localStorageService, $rootScope, $state) {
+  .controller('EventsCtrl', function($log, $scope, EventFetching, $ionicLoading, $rootScope, $state) {
     $log.log('EventsCtrl loaded');
     $rootScope.viewName = 'events';
 
@@ -18,10 +18,6 @@ angular.module('main')
         event: data
       });
     });
-    var storedRacetracks = localStorageService.get('racetracks');
-
-
-
 
     // Setup the loader
     $ionicLoading.show({
@@ -33,7 +29,6 @@ angular.module('main')
     });
 
     $scope.doRefresh = function() {
-      storedRacetracks = localStorageService.get('racetracks');
 
       EventFetching.getEvents().then(function(data) {
         $log.log('Events recieved : ');

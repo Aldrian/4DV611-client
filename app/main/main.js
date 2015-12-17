@@ -102,7 +102,7 @@ function runBlock($log, $window, Config, localStorageService, AccountManagement,
   var notificationOpenedCallback = function(jsonData) {
     $log.log('notification recieved ! ');
     $log.log(jsonData.ArrayOfObjects);
-    $scope.$broadcast('notificationOpened', {
+    $rootScope.$broadcast('notificationOpened', {
       event: 'jsonData.ArrayOfObjects'
     });
   };
