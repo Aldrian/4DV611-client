@@ -21,10 +21,11 @@ angular.module('main')
 
     return service;
 
-    function createUser(deviceId) {
+    function createUser(deviceId, oneSignalId) {
 
       var user = {
-        deviceId: deviceId
+        deviceId: deviceId,
+        oneSignalId : oneSignalId
       };
 
       var req = {

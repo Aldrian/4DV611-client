@@ -9,6 +9,7 @@
 'use strict';
 angular.module('main')
   .controller('EventsCtrl', function($log, $scope, EventFetching, $ionicLoading, localStorageService, $rootScope) {
+    $log.log('EventsCtrl loaded');
     $rootScope.viewName = 'events';
     var storedRacetracks = localStorageService.get('racetracks');
 

@@ -1,7 +1,7 @@
 'use strict';
 angular.module('main')
   .controller('WelcomeCtrl', function($log, $scope, EventFetching, localStorageService, $state, $cordovaDevice, $timeout) {
-
+    $log.log('WelcomeCtrl loaded');
     EventFetching.getRacetracks().then(function(data) {
       $scope.racetracks = data;
     });

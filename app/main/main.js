@@ -70,60 +70,27 @@ angular.module('main', [
   })
   .run(runBlock);
 
-function runBlock($log, $window, Config, localStorageService, AccountManagement, $cordovaDevice, $location) {
+function runBlock($log, $window, Config, localStorageService, AccountManagement, $cordovaDevice, $location, $rootScope) {
+  var registered = false; //block the state change to events if not properly registered;
 
-
-  /**************************
-  Check for device id
-  **************************/
   var init = function() {
-    $log.log('initializing device');
-    if (!localStorageService.get('uuid')) {
-      //Register the device
-      var uuid = null;
-      if (window.cordova) {
-        uuid = $cordovaDevice.getUUID();
+
+    // Device or browser : different process
+
+    if (window.cordova) {
+      // Device
+      registerToOneSignal();
+      if (checkForDeviceRegistered()) {
+        registerRacetracks();
       } else {
-        uuid = 'chromedebug';
+        getOneSignalIdThenRegister();
       }
-
-      $log.log('DeviceID fetched : ' + uuid);
-
-      AccountManagement.createUser(uuid).then(function(res) {
-        if (res) {
-          //Set the registered key in the localstorage to true
-          localStorageService.set('uuid', uuid);
-          $log.log('User registered');
-          doTheRest();
-        } else {
-          // TODO : Maybe block the app if the user is not properly registered
-          $log.log('Something happened');
-        }
-      });
     } else {
-      $log.log('DeviceID ' + localStorageService.get('uuid') + ' already registered');
-      doTheRest();
-    }
-
-    function doTheRest() {
-
-      if (window.cordova) {
-        /**************************
-        One Signal config
-        **************************/
-        var notificationOpenedCallback = function(jsonData) {
-          $log.log('didReceiveRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
-        };
-
-        $window.plugins.OneSignal.init(Config.ENV.ONESIGNAL_APP_ID, {
-            googleProjectNumber: Config.ENV.GOOGLE_PROJECT_NUMBER
-          },
-          notificationOpenedCallback);
-
-        // Show an alert box if a notification comes in when the user is in your app.
-        $window.plugins.OneSignal.enableInAppAlertNotification(true);
+      // Browser
+      if (checkForDeviceRegistered()) {
+        registerRacetracks();
       } else {
-        // running in dev mode
+        registerDeviceThenCheckForRacetracks(null);
       }
     }
   };
@@ -132,15 +99,72 @@ function runBlock($log, $window, Config, localStorageService, AccountManagement,
     init();
   });
 
-  /**************************
-  Check for racetrack selection
-  **************************/
-  if (!localStorageService.get('racetracks')) {
-    //Block the execution and display the racetrack selection template
-    $location.path('/welcome');
-  } else {
-    $log.log('Racetracks already registered, moving on');
+  var notificationOpenedCallback = function(jsonData) {
+    $log.log('didReceiveRemoteNotificationCallBack: ' + JSON.stringify(jsonData));
+  };
+
+  function registerToOneSignal() {
+    $window.plugins.OneSignal.init(Config.ENV.ONESIGNAL_APP_ID, {
+        googleProjectNumber: Config.ENV.GOOGLE_PROJECT_NUMBER
+      },
+      notificationOpenedCallback);
   }
 
+  function getOneSignalIdThenRegister() {
+    $window.plugins.OneSignal.getIds(function(ids) {
+      registerDeviceThenCheckForRacetracks(ids.userId);
+    });
+  }
+
+  function checkForDeviceRegistered() {
+    if (!localStorageService.get('uuid')) {
+      return false;
+    } else {
+      registered = true;
+      return true;
+    }
+  }
+
+  function registerDeviceThenCheckForRacetracks(oneSignalId) {
+
+    var uuid = null;
+    if (window.cordova) {
+      uuid = $cordovaDevice.getUUID();
+    } else {
+      uuid = 'chromedebug';
+    }
+
+    AccountManagement.createUser(uuid, oneSignalId).then(function(res) {
+      if (res) {
+        $log.log(res);
+        localStorageService.set('uuid', uuid);
+        registered = true;
+        registerRacetracks();
+      } else {
+        // TODO : Maybe block the app if the user is not properly registered
+        $log.log('Something happened');
+      }
+    });
+
+  }
+
+  function registerRacetracks() {
+    if (!localStorageService.get('racetracks')) {
+      //Block the execution and display the racetrack selection template
+      $location.path('/welcome');
+    } else {
+      $log.log('Racetracks already registered, moving on');
+      $location.path('/events');
+    }
+  }
+
+
   $log.debug('runBlock end');
+
+  $rootScope.$on('$stateChangeStart',
+    function(event, toState) {
+      if (toState.name === 'main.events' && registered !== true) {
+        event.preventDefault();
+      }
+    });
 }
