@@ -93,23 +93,7 @@ angular.module('main')
       //Record the choices in the Local storage and set selectedRacetracks to true
       localStorageService.set('racetracks', selectedRacetracks);
       EventFetching.postSubscriptions(selectedRacetracks);
-      if (window.cordova) {
-        // Running on device
-        // Send taglist to OneSignal
-        window.plugins.OneSignal.getTags(function(tags) {
-          var toRemove = [];
-          //check for removed tags
-          for (var key in tags) {
-            if (!tagList[key]) {
-              toRemove.push(key);
-            }
-          }
-          window.plugins.OneSignal.deleteTag(toRemove);
-          window.plugins.OneSignal.sendTags(tagList);
-        });
-
-
-      }
+      
       //Move on
       $scope.closeModal();
     };
