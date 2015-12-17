@@ -101,10 +101,13 @@ function runBlock($log, $window, Config, localStorageService, AccountManagement,
 
   var notificationOpenedCallback = function(jsonData) {
     $log.log('notification recieved ! ');
-    $log.log(jsonData.ArrayOfObjects);
-    $rootScope.$broadcast('notificationOpened', {
-      event: 'jsonData.ArrayOfObjects'
-    });
+    if (jsonData.ArrayOfObjects !== undefined) {
+      $log.log(jsonData.ArrayOfObjects);
+      $rootScope.$broadcast('notificationOpened', {
+        event: 'jsonData.ArrayOfObjects'
+      });
+    }
+
   };
 
   function registerToOneSignal() {
