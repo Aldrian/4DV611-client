@@ -21,13 +21,7 @@ angular.module('main')
     var storedRacetracks = localStorageService.get('racetracks');
 
 
-    var selectedRacetrack = function(racetrack) {
-      if (storedRacetracks.indexOf(racetrack.track.id) === -1) {
-        return false;
-      } else {
-        return true;
-      }
-    };
+
 
     // Setup the loader
     $ionicLoading.show({
@@ -44,7 +38,7 @@ angular.module('main')
       EventFetching.getEvents().then(function(data) {
         $log.log('Events recieved : ');
         $log.log(data);
-        $scope.events = data.filter(selectedRacetrack);
+        $scope.events = data;
         $scope.eventCount = $scope.events.length;
       }).finally(function() {
         // Stop the ion-refresher from spinning
@@ -57,7 +51,7 @@ angular.module('main')
     eventPromise.then(function(data) {
       $log.log('Events recieved : ');
       $log.log(data);
-      $scope.events = data.filter(selectedRacetrack);
+      $scope.events = data;
       $scope.eventCount = $scope.events.length;
       //Hide loader
       $ionicLoading.hide();
