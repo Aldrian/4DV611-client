@@ -62,13 +62,16 @@
     </ion-header-bar>
     <ion-content>
       <div class="email-input" ng-if="!registeredEmail">
-        <div class="email-description">
-          <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h3>
-        </div>
-        <p class="input-container">
-          <input class="email-input" id="input-email" type="email">
-          <label for="input-email" unselectable="on">Email address</label>
-        </p>
+        <ion-scroll>
+          <div class="email-description" class="hide-on-keyboard-open">
+            <h3>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</h3>
+          </div>
+          <p class="input-container">
+            <input class="email-input" id="input-email" type="email">
+            <label for="input-email" unselectable="on">Email address</label>
+          </p>
+        </ion-scroll>
+
       </div>
 
       <div class="email-input" ng-if="registeredEmail">

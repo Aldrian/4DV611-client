@@ -32,6 +32,15 @@ angular.module('main')
       $scope.emailmodal = modal;
     });
 
+
+    $window.addEventListener('native.keyboardshow', function() {
+      $('.email-description').hide();
+    });
+    $window.addEventListener('native.keyboardhide', function() {
+      $('.email-description').show();
+    });
+
+
     $scope.openEmailModal = function() {
       $scope.emailmodal.show();
       $(document).ready(function() {
@@ -93,7 +102,7 @@ angular.module('main')
       //Record the choices in the Local storage and set selectedRacetracks to true
       localStorageService.set('racetracks', selectedRacetracks);
       EventFetching.postSubscriptions(selectedRacetracks);
-      
+
       //Move on
       $scope.closeModal();
     };
