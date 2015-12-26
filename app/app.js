@@ -5,5 +5,6 @@ angular.module('apdClient', [
   'LocalStorageModule',
   'base64',
   'ionic',
-  'angularMoment'
+  'angularMoment',
+  'ja.qr'
 ]);

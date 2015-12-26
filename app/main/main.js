@@ -60,6 +60,15 @@ angular.module('main', [
           }
         }
       })
+      .state('main.code', {
+        url: '/code',
+        views: {
+          'pageContent': {
+            templateUrl: 'main/templates/code.html',
+            controller: 'CodeCtrl as ctrl'
+          }
+        }
+      })
       .state('welcome', {
         url: '/welcome',
         templateUrl: 'main/templates/welcome.html',
