@@ -93,7 +93,7 @@ angular.module('main')
       //Record the choices in the Local storage and set selectedRacetracks to true
       localStorageService.set('racetracks', selectedRacetracks);
       EventFetching.postSubscriptions(selectedRacetracks);
-      
+
       //Move on
       $scope.closeModal();
     };
