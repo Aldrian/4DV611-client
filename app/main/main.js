@@ -80,7 +80,8 @@ angular.module('main', [
   .run(runBlock);
 
 function runBlock($log, $window, Config, localStorageService, AccountManagement, $cordovaDevice, $location, $rootScope) {
-  var registered = false; //block the state change to events if not properly registered;
+
+  var registered = localStorageService.get('uuid') ? true : false; //block the state change to events if not properly registered;
 
   var init = function() {
 
