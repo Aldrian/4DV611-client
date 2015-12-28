@@ -25,6 +25,6 @@
     "angular-sanitize": "~1.4.5",
     "angular-ui-router": "~0.2.15"
   },
-  "name": "apd-client",
+  "name": "Swedish Racetracks",
   "private": true
 }
