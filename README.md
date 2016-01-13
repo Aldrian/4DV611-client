@@ -8,7 +8,6 @@
 - In order to run your app on a device, you'll need:
   - **Platform SDKs** for the ones you are developing for. Head over to cordova documentation: [Platform Guides](http://cordova.apache.org/docs/en/edge/guide/platforms/index.html) or cordova cli: [Requirements](https://github.com/apache/cordova-cli/#requirements)
 
-.
 
 ### After git clone
 Since all these files are excluded from git, you need to install all of them when you start with a fresh clone of your project. In order to do so, run the following commands in that order:
@@ -64,7 +63,7 @@ Livereloads your application when changing/adding/deleting files to immediately 
 </pre>
 
 #### A few things to understand before getting your hands dirty
-- The all the routes (states) are declared in the `main.js` file.
+- All the routes (states) are declared in the `main.js` file.
 - There is actually one big state (main) with some child states in order to get the UI navigation correct (previous button working, and off-canvas menu), the two other ones (welcome and loading) are independent.
 - The loading state is a -fake- state designed to prevent any crashing due to the sneaky nature of angular to not properly implement asynchronous management in its run block (as the app was running into the `otherwise` state, who was calling a request without the app properly registered --> 401). The trick was to create a blank state with only a blank template inside that is waiting for a resolve from the `LoadingManagement`. The `LoadingManagement` create a promise, then implements all the asynchronous workflow needed to get the app initialized properly, then change the location to the desired state and resolve its promise to unblock the app.
 
