@@ -5,7 +5,7 @@
 
 'use strict';
 angular.module('main')
-  .controller('ConfigCtrl', function($log, $ionicModal, $ionicPlatform, Config, $window, $scope, localStorageService, EventFetching, AccountManagement, $timeout) {
+  .controller('ConfigCtrl', function($log, $ionicModal, $ionicPlatform, Config, $window, $scope, localStorageService, EventFetching, AccountManagement, $timeout, $rootScope) {
 
     EventFetching.getRacetracks().then(function(data) {
       $scope.racetracks = data;
@@ -102,7 +102,8 @@ angular.module('main')
       //Record the choices in the Local storage and set selectedRacetracks to true
       localStorageService.set('racetracks', selectedRacetracks);
       EventFetching.postSubscriptions(selectedRacetracks);
-
+      //Broadcast that racetracks have been updated
+      $rootScope.$broadcast('racetracksChanged');
       //Move on
       $scope.closeModal();
     };

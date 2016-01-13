@@ -4,17 +4,17 @@
     <!-- content goes here -->
     <ion-list>
       <div class="settings-items">
-        <ion-item class="item item-icon-left item-icon-right">
+        <ion-item class="item item-icon-left item-icon-right" ng-click="openRacetracksModal()">
           <i class="icon ion-ios-toggle"></i>
-          <p ng-click="openRacetracksModal()">Select your racetracks</p>
+          <p>Select your racetracks</p>
           <i class="icon ion-ios-arrow-right"></i>
         </ion-item>
-        <ion-item class="item item-icon-left item-icon-right">
+        <ion-item class="item item-icon-left item-icon-right" ng-click="openEmailModal()">
           <i class="icon ion-email"></i>
-          <p ng-click="openEmailModal()" ng-if="registeredEmail">
+          <p ng-if="registeredEmail">
             Unregister Your E-mail
           </p>
-          <p ng-click="openEmailModal()" ng-if="!registeredEmail">
+          <p ng-if="!registeredEmail">
             Register Your E-mail
           </p>
           <i class="icon ion-ios-arrow-right"></i>

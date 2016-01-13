@@ -23,18 +23,14 @@ angular.module('main')
       function addAuth() {
         var uuid = localStorageService.get('uuid');
         var accessToken = 'Basic ' + $base64.encode(uuid + ':' + uuid);
-
         config.headers.Authorization = accessToken;
-
         return config;
       }
-
-
     };
 
     service.responseError = function(response) {
       if (response.status === 401) {
-        $rootScope.$broadcast('unauthorized');
+        $log.log('Unauthorised request');
       }
       return response;
     };

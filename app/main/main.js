@@ -9,9 +9,23 @@ angular.module('main', [
     $ionicConfigProvider.views.maxCache(5);
     $httpProvider.interceptors.push('APIInterceptor');
     // ROUTING with ui.router
-    $urlRouterProvider.otherwise('/events');
+    $urlRouterProvider.otherwise('/loading');
     $stateProvider
     // this state is placed in the <ion-nav-view> in the index.html
+      .state('loading', {
+        url: '/loading',
+        templateUrl: 'main/templates/loading.html',
+        resolve: {
+          foo: function(LoginManagement) {
+            return LoginManagement.getPromise();
+          }
+        }
+      })
+      .state('welcome', {
+        url: '/welcome',
+        templateUrl: 'main/templates/welcome.html',
+        controller: 'WelcomeCtrl as ctrl'
+      })
       .state('main', {
         url: '',
         abstract: true,
@@ -68,120 +82,14 @@ angular.module('main', [
             controller: 'CodeCtrl as ctrl'
           }
         }
-      })
-      .state('welcome', {
-        url: '/welcome',
-        templateUrl: 'main/templates/welcome.html',
-        controller: 'WelcomeCtrl as ctrl'
       });
 
 
   })
   .run(runBlock);
 
-function runBlock($log, $window, Config, localStorageService, AccountManagement, $cordovaDevice, $location, $rootScope) {
-
-  var registered = localStorageService.get('uuid') ? true : false; //block the state change to events if not properly registered;
-
-  var init = function() {
-
-    // Device or browser : different process
-
-    if (window.cordova) {
-      // Device
-      registerToOneSignal();
-      if (checkForDeviceRegistered()) {
-        registerRacetracks();
-      } else {
-        getOneSignalIdThenRegister();
-      }
-    } else {
-      // Browser
-      if (checkForDeviceRegistered()) {
-        registerRacetracks();
-      } else {
-        registerDeviceThenCheckForRacetracks(null);
-      }
-    }
-  };
-
-  ionic.Platform.ready(function() {
-    init();
-  });
-
-  var notificationOpenedCallback = function(jsonData) {
-    $log.log('notification opened!');
-    $log.log(jsonData.additionalData);
-    if (jsonData.additionalData !== undefined) {
-      $rootScope.$broadcast('notificationOpened', {
-        eventId: jsonData.additionalData.eventId
-      });
-    }
-
-  };
-
-  function registerToOneSignal() {
-    $window.plugins.OneSignal.init(Config.ENV.ONESIGNAL_APP_ID, {
-        googleProjectNumber: Config.ENV.GOOGLE_PROJECT_NUMBER
-      },
-      notificationOpenedCallback);
-  }
-
-  function getOneSignalIdThenRegister() {
-    $window.plugins.OneSignal.getIds(function(ids) {
-      registerDeviceThenCheckForRacetracks(ids.userId);
-    });
-  }
-
-  function checkForDeviceRegistered() {
-    if (!localStorageService.get('uuid')) {
-      return false;
-    } else {
-      registered = true;
-      return true;
-    }
-  }
-
-  function registerDeviceThenCheckForRacetracks(oneSignalId) {
-
-    var uuid = null;
-    if (window.cordova) {
-      uuid = $cordovaDevice.getUUID();
-    } else {
-      uuid = 'chromedebug';
-    }
-
-    AccountManagement.createUser(uuid, oneSignalId).then(function(res) {
-      if (res) {
-        $log.log(res);
-        localStorageService.set('uuid', uuid);
-        registered = true;
-        registerRacetracks();
-      } else {
-        // TODO : Maybe block the app if the user is not properly registered
-        $log.log('Something happened');
-      }
-    });
-
-  }
-
-  function registerRacetracks() {
-    if (!localStorageService.get('racetracks')) {
-      //Block the execution and display the racetrack selection template
-      $location.path('/welcome');
-    } else {
-      $log.log('Racetracks already registered, moving on');
-      $location.path('/events');
-    }
-  }
-
+function runBlock($log) {
 
   $log.debug('runBlock end');
 
-  $rootScope.$on('$stateChangeStart',
-    function(event, toState) {
-      if (toState.name === 'main.events' && registered !== true) {
-        event.preventDefault();
-      }
-    });
 }

@@ -22,7 +22,16 @@ angular.module('main')
           });
         }
       });
+    });
 
+    $rootScope.$on('racetracksChanged', function() {
+      $log.log('racetracks changed !');
+      EventFetching.getEvents().then(function(data) {
+        $log.log('Events recieved : ');
+        $log.log(data);
+        $scope.events = data;
+        $scope.eventCount = $scope.events.length;
+      });
     });
 
     // Setup the loader

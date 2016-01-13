@@ -41,6 +41,7 @@ ion-header-bar,
 .bar {
   background-color: transparent;
   color: $white;
+  background-image: none !important;
   .title {
     font-weight: 700;
     text-align: center !important;
@@ -75,6 +76,10 @@ ion-header-bar,
   margin-bottom: 8px;
   font-family: 'Lato', sans-serif;
   font-weight: 700;
+  &.activated {
+    border: none;
+    background-color: lighten($background, 2%);
+  }
   &.item-icon-left {
     span {
       margin-left: 15px;
@@ -118,6 +123,14 @@ ion-side-menu {
       overflow: auto;
     }
   }
+}
+.loadingPane {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: $background;
 }
 .loading-container .loading {
   background-color: transparent;
