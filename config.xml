@@ -2,10 +2,10 @@
 <widget id="se.lnu.apd.client" version="0.0.1" xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns="http://www.w3.org/ns/widgets">
   <name>Swedish Racetracks</name>
   <description>
-    A sample Apache Cordova application that responds to the deviceready event.
+    Swedish RaceTrack is an application to keep you update about horse-race events. You can select your racetrack and receive notification about your favorite tracks. No registration needed, we only get your email address to know about your favorite tracks.
   </description>
-  <author email="dev@cordova.apache.org" href="http://cordova.io">
-    Apache Cordova Team
+  <author email="engineering@travappar.se" href="Travappar.se">
+    Travappar.se
   </author>
   <content src="index.html"/>
   <access origin="*"/>

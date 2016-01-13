@@ -3,8 +3,6 @@
 ### Prerequisites
 - Installation and **fair knowledge** of:
 - node & npm - http://nodejs.org/download/
-  - yo: `npm install --global yo` - http://yeoman.io/
-  - project generator: `npm install --global generator-m-ionic` - https://github.com/mwaylabs/generator-m-ionic
   - gulp: `npm install --global gulp` - http://gulpjs.com/
   - bower: `npm install --global bower` - http://bower.io/
 - In order to run your app on a device, you'll need:
@@ -69,36 +67,31 @@ Livereloads your application when changing/adding/deleting files to immediately 
 ├──  README.md      - the generator's README.md
 </pre>
 
-## Testing
-When setting up your project or using the module, controller, service, directive or filter sub-generator, Generator-M-Ionic will automatically generate sample test files for that component. These files can be found in the `test/karma` and `test/protractor` directory respectively. To check if all tests are running properly run:
-
-```sh
-gulp karma
-# and
-gulp protractor
-```
-**Hint**: `gulp watch` and `gulp protractor` cannot be run at the same time.
-
-If you are new to testing your app with protractor, karma and jasmine. Here are some good places to get started:
-
-Articles on **testing angular**
-- AngularJS Developer Guide - [Unit Testing](https://docs.angularjs.org/guide/unit-testing)
-- Smashing Magazine - [Unit Testing In AngularJS](http://www.smashingmagazine.com/2014/10/introduction-to-unit-testing-in-angularjs/)
-  - careful: uses mocha, chai & sinon but we use jasmine. Still worth a look!
-
-**jasmine** website - http://jasmine.github.io/
-
-**protractor** website - http://angular.github.io/protractor/#/
-
-**karma** website - http://karma-runner.github.io/
+#### A few things to understand before getting your hands dirty
+- The all the routes (states) are declared in the `main.js` file.
+- There is actually one big state (main) with some child states in order to get the UI navigation correct (previous button working, and off-canvas menu), the two other ones (welcome and loading) are independent.
+- The loading state is a -fake- state designed to prevent any crashing due to the sneaky nature of angular to not properly implement asynchronous management in its run block (as the app was running into the `otherwise` state, who was calling a request without the app properly registered --> 401). The trick was to create a blank state with only a blank template inside that is waiting for a resolve from the `LoadingManagement`. The `LoadingManagement` create a promise, then implements all the asynchronous workflow needed to get the app initialized properly, then change the location to the desired state and resolve its promise to unblock the app.
 
 
-## Guides
-- Setting up and working with [ESLint](https://github.com/mwaylabs/generator-m-ionic/tree/master/docs/guides/eslint.md)
-- Working with our [SASS integration](https://github.com/mwaylabs/generator-m-ionic/tree/master/docs/guides/sass_integration.md)
-- Using Ionic [CSS or SASS](https://github.com/mwaylabs/generator-m-ionic/tree/master/docs/guides/ionic_css_or_sass.md)
-- Managing app [icons and splash screens](https://github.com/mwaylabs/generator-m-ionic/tree/master/docs/guides/icons_splash_screens.md). Good for different app configurations (beta, production, ...).
-- The contents of the [`config.xml` can be changed programmatically](https://github.com/mwaylabs/generator-m-ionic/tree/master/docs/guides/programmatically_change_configxml.md). Good for continuous integration.
+#### App workflow
+At launch, the app will go to a state called `loading` (see above), and will wait for all the initialization process done in the `LoadingManagement` service to be done. The app will then display the `racetrack selections` (if not registered) or the `event list`.
+The standard process is to :
+- Click on an `event` on the `event list`: it will change the state to display the `event details` view, passing the right event.
+- Click on a `race` on the `event details`; it will change the state to display the `race details` view, passing the right race.
+The user can go back to a previous time using the back arrow or the return button on his smartphone, it is handled by the Ionic `ion-nav-view`.
+There is also an off-canvas menu, allowing the user to:
+- Go to the `event list` with a counter showing the number of events
+- Go to the `settings` screen, allowing the user to add/remove the email, and to manage the racetracks.
+- Display the user QR-code generated, linking to the `admin panel`, at the endpoint `/offers/:deviceId`
+The `welcome` view is loaded on app startup if no racetracks are registered. It forces the user to select a racetrack before continuing.
+
+
+#### What's left to do:
+Honestly, not so much on this client, all the things asked during the sprint have been done.
+We can still make a small list:
+- Some UI enhancement, design updates and app personalization.
+- Rework the keyboard hiding on the setting/email page in a sexier way.
+- Filter the event, only showing the upcoming events if it is not done on the backend.
 
 ## More gulp tasks
 
@@ -251,46 +244,8 @@ instead of this:
 gulp --cordova 'run android' # won't work on windows
 ```
 
-## Sub-generators
-
-#### yo m-ionic:...
-A handy and fast way to create different angular components, handling all the boilerplate for you.
-The `<moduleName>` is optional and defaults to the main module when left blank
-```sh
-yo m-ionic:constant <constantName> <moduleName>
-yo m-ionic:controller <controllerName> <moduleName>
-yo m-ionic:directive <directiveName> <moduleName>
-yo m-ionic:filter <filterName> <moduleName>
-yo m-ionic:pair <pairName> <moduleName> # creates controller & template
-yo m-ionic:template <templateName> <moduleName>
-yo m-ionic:service <serviceName> <moduleName>
-```
-If you have `gulp watch` running, gulp will automatically inject your new files into your application and they will be available right away.
-
-#### yo m-ionic:module - creates a new module
-**Important**: While we are particularly proud of this feature, please note that using modules is only useful in large projects. We recommend that you only use them, if you know why you want to use them in your project. In our experience for most projects using one module is just fine.
-
-1. `yo m-ionic:module <moduleName>` - create a new module
-2. choose your template: `sidemenu`, `tabs` or `blank`
-2. add your module to the `app/app.js`:
-
-  ```js
-  'use strict';
-  angular.module('myProject', [
-    // your modules
-    'main',
-    '<newModuleName>'
-  ]);
-  ```
-3. restart your `gulp watch` task
-3. in your browser, depending on the template you chose, navigate to `http://localhost:9000/#`
-  - `/<module-name-in-kebap-case>` for `blank` templates
-  - `/<module-name-in-kebap-case>/list` for `sidemenu` and `tabs` templates
-4. **Done!** - see your new module in action!
-
-
 ## Git integration
-The generator provides a default set of configuration for git:
+The project provides a default set of configuration for git:
 - `.gitignore` and `.gitattributes` - http://git-scm.com/docs/gitignore
 
 Leaving them as they are generated, you will allow git to exclude all of the 3rd party code from your project. Specifically this means:
@@ -304,7 +259,7 @@ Since `cordova 5.0` all platforms and plugins you install can be added to the `c
 Release notes:
 https://cordova.apache.org/news/2015/04/21/tools-release.html
 
-> Added the ability to manage your plugin and platform dependencies in your project’s `config.xml`. When adding plugins or platforms, use the `--save` flag to add them to `config.xml`. Ex: `cordova platform add android --save`. Existing projects can use `cordova plugin save` and `cordova platform save` commands to save all previously installed plugins and platforms into your project’s `config.xml`. Platforms and plugins will be autorestored when `cordova prepare` is run. This allows developers to easily manage and share their dependenceis among different development enviroments and with their coworkers.
+> Added the ability to manage your plugin and platform dependencies in your project’s `config.xml`. When adding plugins or platforms, use the `--save` flag to add them to `config.xml`. Ex: `cordova platform add android --save`. Existing projects can use `cordova plugin save` and `cordova platform save` commands to save all previously installed plugins and platforms into your project’s `config.xml`. Platforms and plugins will be autorestored when `cordova prepare` is run. This allows developers to easily manage and share their dependencies among different development environments and with their coworkers.
 >
 
 Since your projects `.gitignore` will completely ignore the `platforms/` and `plugins/` folders, it's important to make sure your `config.xml` contains all the plugins and platforms required by your project. As explained above this can either be achieved by always using the `--save` options when adding/removing platforms:
