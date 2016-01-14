@@ -4,7 +4,7 @@
  */
 'use strict';
 angular.module('main')
-  .service('AccountManagement', function($log, Config, $http) {
+  .service('AccountManagement', function($log, Config, $http, localStorageService) {
 
     var apiHost = Config.ENV.SERVER_URL;
 
@@ -41,7 +41,10 @@ angular.module('main')
       return $http(req).then(createUserComplete)
         .catch(createUserFailed);
 
-      function createUserComplete() {
+      function createUserComplete(response) {
+        $log.log('createUserComplete');
+        $log.info(response.data);
+        localStorageService.set('userObj', response.data);
         return true; // Promise for the recieved data, not the real data
       }
 
@@ -51,19 +54,11 @@ angular.module('main')
       }
     }
 
-    function addEmail(deviceId, email) {
+    function addEmail(email) {
 
-      var user = {
-
-        email: email,
-        username: null,
-        password: null,
-        deviceId: deviceId,
-        role: 2,
-        trackId: null,
-        enabled: true
-      };
-
+      var user = localStorageService.get('userObj');
+      user.email = email;
+      $log.info(user);
       var req = {
         method: 'PUT',
         url: apiHost + 'users/',
@@ -77,7 +72,9 @@ angular.module('main')
       return $http(req).then(addEmailComplete)
         .catch(addEmailFailed);
 
-      function addEmailComplete() {
+      function addEmailComplete(response) {
+        $log.info(response.data);
+        localStorageService.set('userObj', response.data);
         return true; // Promise for the recieved data, not the real data
       }
 
@@ -87,17 +84,10 @@ angular.module('main')
       }
     }
 
-    function deleteEmail(deviceId) {
+    function deleteEmail() {
 
-      var user = {
-        email: '',
-        username: null,
-        password: null,
-        deviceId: deviceId,
-        role: 2,
-        trackId: null,
-        enabled: true
-      };
+      var user = localStorageService.get('userObj');
+      user.email = null;
 
       var req = {
         method: 'PUT',
@@ -112,7 +102,9 @@ angular.module('main')
       return $http(req).then(deleteEmailComplete)
         .catch(deleteEmailFailed);
 
-      function deleteEmailComplete() {
+      function deleteEmailComplete(response) {
+        $log.info(response.data);
+        localStorageService.set('userObj', response.data);
         return true; // Promise for the recieved data, not the real data
       }
 

@@ -113,10 +113,9 @@ angular.module('main')
         var email = angular.element('#input-email').val();
         var EMAIL_REGEXP = new RegExp(/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/);
         if (EMAIL_REGEXP.test(email)) {
-          var uuid = localStorageService.get('uuid');
 
           // We are on mobile and deviceid is registered, so we can send the email
-          AccountManagement.addEmail(uuid, email).then(function(res) {
+          AccountManagement.addEmail(email).then(function(res) {
             if (res) {
               //Set the registered key in the localstorage to true
               localStorageService.set('email', email);
@@ -146,9 +145,8 @@ angular.module('main')
     };
     $scope.deleteEmail = function(action) {
       if (action === 'confirm') {
-        var uuid = localStorageService.get('uuid');
 
-        AccountManagement.deleteEmail(uuid).then(function(res) {
+        AccountManagement.deleteEmail().then(function(res) {
           if (res) {
             //Set the registered key in the localstorage to true
             localStorageService.remove('email');

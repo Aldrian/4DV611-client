@@ -32,8 +32,12 @@ angular.module('main')
       $log.log('notification opened!');
       $log.log(jsonData.additionalData);
       if (jsonData.additionalData !== undefined) {
-        $rootScope.$broadcast('notificationOpened', {
-          eventId: jsonData.additionalData.eventId
+        $rootScope.$broadcast('racetracksChanged');
+        $rootScope.$on('eventsFetched', function() {
+          $log.log('Events fetched');
+          $rootScope.$broadcast('notificationOpened', {
+            eventId: jsonData.additionalData.eventId
+          });
         });
       }
     };

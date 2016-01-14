@@ -31,6 +31,7 @@ angular.module('main')
         $log.log(data);
         $scope.events = data;
         $scope.eventCount = $scope.events.length;
+        $rootScope.$broadcast('eventsFetched');
       });
     });
 

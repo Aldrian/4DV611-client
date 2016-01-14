@@ -64,6 +64,7 @@ Livereloads your application when changing/adding/deleting files to immediately 
 
 #### A few things to understand before getting your hands dirty
 - All the routes (states) are declared in the `main.js` file.
+- The backend URL is a constant, declared in constant/env file.
 - There is actually one big state (main) with some child states in order to get the UI navigation correct (previous button working, and off-canvas menu), the two other ones (welcome and loading) are independent.
 - The loading state is a -fake- state designed to prevent any crashing due to the sneaky nature of angular to not properly implement asynchronous management in its run block (as the app was running into the `otherwise` state, who was calling a request without the app properly registered --> 401). The trick was to create a blank state with only a blank template inside that is waiting for a resolve from the `LoadingManagement`. The `LoadingManagement` create a promise, then implements all the asynchronous workflow needed to get the app initialized properly, then change the location to the desired state and resolve its promise to unblock the app.
 
@@ -87,6 +88,7 @@ We can still make a small list:
 - Some UI enhancement, design updates and app personalization.
 - Rework the keyboard hiding on the setting/email page in a sexier way.
 - Filter the event, only showing the upcoming events if it is not done on the backend.
+- A visual feedback on email adding - removal and also on racetrack subscriptions.
 
 ## More gulp tasks
 
